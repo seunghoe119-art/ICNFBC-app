@@ -2,19 +2,19 @@ import { ArrowRight } from "lucide-react";
 
 const newsItems = [
   {
-    date: "March 10, 2024",
-    title: "Championship Victory",
-    excerpt: "Thunder Hoops secures regional championship with outstanding team performance.",
+    date: "2024년 3월 10일",
+    title: "챔피언십 우승",
+    excerpt: "뛰어난 팀 퍼포먼스로 지역 챔피언십을 차지했습니다.",
   },
   {
-    date: "March 8, 2024",
-    title: "New Training Facility",
-    excerpt: "State-of-the-art facility now open for all team members and community.",
+    date: "2024년 3월 8일",
+    title: "새로운 훈련 시설",
+    excerpt: "모든 팀원과 커뮤니티를 위한 최첨단 시설이 개방되었습니다.",
   },
   {
-    date: "March 5, 2024",
-    title: "Player Spotlight",
-    excerpt: "Get to know Marcus Johnson and his journey to becoming team captain.",
+    date: "2024년 3월 5일",
+    title: "선수 스포트라이트",
+    excerpt: "마커스 존슨이 팀 주장이 되기까지의 여정을 소개합니다.",
   },
 ];
 
@@ -25,7 +25,7 @@ export default function News() {
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black mb-6">Latest News</h2>
           <p className="text-xl text-gray-400 font-light">
-            Stay updated with Thunder Hoops.
+            ICN FIRE 소식을 확인하세요.
           </p>
         </div>
 
@@ -37,7 +37,7 @@ export default function News() {
                 <h3 className="font-bold text-xl mb-4">{item.title}</h3>
                 <p className="text-gray-400 mb-6">{item.excerpt}</p>
                 <button className="text-accent hover:text-red-400 transition-colors font-medium inline-flex items-center">
-                  Read More
+                  더 보기
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </button>
               </div>

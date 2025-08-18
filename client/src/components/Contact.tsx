@@ -2,22 +2,22 @@ import { MessageCircle, Instagram, Mail } from "lucide-react";
 
 const contactMethods = [
   {
-    name: "KakaoTalk",
-    description: "Instant messaging",
+    name: "카카오톡",
+    description: "즉석 메시징",
     icon: MessageCircle,
     color: "yellow-400",
     hoverColor: "yellow-400",
   },
   {
-    name: "Instagram",
-    description: "Follow our journey",
+    name: "인스타그램",
+    description: "우리의 여정을 팔로우하세요",
     icon: Instagram,
     color: "gradient-to-br from-purple-500 to-pink-500",
     hoverColor: "purple-500",
   },
   {
-    name: "Email",
-    description: "Direct contact",
+    name: "이메일",
+    description: "직접 연락",
     icon: Mail,
     color: "blue-500",
     hoverColor: "blue-500",
@@ -31,7 +31,7 @@ export default function Contact() {
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black text-black mb-6">Say Hello</h2>
           <p className="text-xl text-gray-600 font-light max-w-3xl mx-auto">
-            Questions about joining or practice? Message us anytime.
+            가입이나 연습에 대한 궁금한 점이 있으신가요? 언제든지 연락하세요.
           </p>
         </div>
 

@@ -77,47 +77,47 @@ export default function JoinUs() {
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black mb-6">Join the Team</h2>
           <p className="text-xl text-gray-400 font-light max-w-3xl mx-auto">
-            Ready to play real 5-on-5 and grow with a committed squad?
+            진정한 5대5 경기를 통해 헌신적인 팀과 함께 성장할 준비가 되셨나요?
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div className="space-y-8">
             <div className="bg-gray-900 rounded-2xl p-8">
-              <h3 className="font-bold text-2xl mb-4">Membership Options</h3>
+              <h3 className="font-bold text-2xl mb-4">회원 옵션</h3>
               
               <div className="space-y-6">
                 <div className="border border-gray-700 rounded-xl p-6 hover:border-accent transition-colors">
-                  <h4 className="font-bold text-lg mb-2">Regular Member</h4>
-                  <p className="text-gray-400 mb-3">Best if you attend ≥2 times/month</p>
-                  <p className="text-2xl font-bold text-accent">₩19,000/month</p>
+                  <h4 className="font-bold text-lg mb-2">정규 회원</h4>
+                  <p className="text-gray-400 mb-3">월 2회 이상 참석 시 최적</p>
+                  <p className="text-2xl font-bold text-accent">₩19,000/월</p>
                 </div>
 
                 <div className="border border-gray-700 rounded-xl p-6 hover:border-accent transition-colors">
-                  <h4 className="font-bold text-lg mb-2">Dormant Member</h4>
-                  <p className="text-gray-400 mb-3">3-month blocks; guest rate applies when attending</p>
-                  <p className="text-2xl font-bold text-accent">₩5,000/month</p>
+                  <h4 className="font-bold text-lg mb-2">휴면 회원</h4>
+                  <p className="text-gray-400 mb-3">3개월 단위; 참석 시 게스트 요금 적용</p>
+                  <p className="text-2xl font-bold text-accent">₩5,000/월</p>
                 </div>
 
                 <div className="border border-gray-700 rounded-xl p-6 hover:border-accent transition-colors">
-                  <h4 className="font-bold text-lg mb-2">Firefighter Cadet</h4>
-                  <p className="text-gray-400 mb-3">Special program for emergency service trainees</p>
-                  <p className="text-2xl font-bold text-green-500">Free</p>
+                  <h4 className="font-bold text-lg mb-2">소방 간부후보생</h4>
+                  <p className="text-gray-400 mb-3">응급 서비스 훈련생을 위한 특별 프로그램</p>
+                  <p className="text-2xl font-bold text-green-500">무료</p>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="bg-gray-900 rounded-2xl p-8">
-            <h3 className="font-bold text-2xl mb-6">Application Form</h3>
+            <h3 className="font-bold text-2xl mb-6">신청서</h3>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-white">Name</Label>
+                  <Label className="text-white">이름</Label>
                   <Input 
                     type="text" 
-                    placeholder="Full Name"
+                    placeholder="성명"
                     className="bg-black border-gray-700 text-white mt-2"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -125,10 +125,10 @@ export default function JoinUs() {
                   />
                 </div>
                 <div>
-                  <Label className="text-white">Phone/Email</Label>
+                  <Label className="text-white">연락처</Label>
                   <Input 
                     type="text" 
-                    placeholder="Contact Information"
+                    placeholder="전화번호/이메일"
                     className="bg-black border-gray-700 text-white mt-2"
                     value={formData.contact}
                     onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
@@ -139,41 +139,41 @@ export default function JoinUs() {
 
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-white">Position</Label>
+                  <Label className="text-white">포지션</Label>
                   <select 
                     className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none mt-2"
                     value={formData.position}
                     onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                     required
                   >
-                    <option value="">Select Position</option>
-                    <option value="guard">Point Guard</option>
-                    <option value="shooting">Shooting Guard</option>
-                    <option value="forward">Small Forward</option>
-                    <option value="power">Power Forward</option>
-                    <option value="center">Center</option>
+                    <option value="">포지션 선택</option>
+                    <option value="guard">포인트 가드</option>
+                    <option value="shooting">슈팅 가드</option>
+                    <option value="forward">스몰 포워드</option>
+                    <option value="power">파워 포워드</option>
+                    <option value="center">센터</option>
                   </select>
                 </div>
                 <div>
-                  <Label className="text-white">Jersey Size</Label>
+                  <Label className="text-white">유니폼 사이즈</Label>
                   <select 
                     className="w-full bg-black border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-accent focus:outline-none mt-2"
                     value={formData.jerseySize}
                     onChange={(e) => setFormData({ ...formData, jerseySize: e.target.value })}
                     required
                   >
-                    <option value="">Select Size</option>
-                    <option value="s">Small</option>
-                    <option value="m">Medium</option>
-                    <option value="l">Large</option>
-                    <option value="xl">X-Large</option>
-                    <option value="xxl">XX-Large</option>
+                    <option value="">사이즈 선택</option>
+                    <option value="s">소형 (S)</option>
+                    <option value="m">중형 (M)</option>
+                    <option value="l">대형 (L)</option>
+                    <option value="xl">특대 (XL)</option>
+                    <option value="xxl">특특대 (XXL)</option>
                   </select>
                 </div>
               </div>
 
               <div>
-                <Label className="text-white">Membership Type</Label>
+                <Label className="text-white">회원 유형</Label>
                 <div className="space-y-3 mt-2">
                   <label className="flex items-center">
                     <input 
@@ -184,7 +184,7 @@ export default function JoinUs() {
                       onChange={(e) => setFormData({ ...formData, membershipType: e.target.value })}
                       required
                     />
-                    <span className="ml-3">Regular Member (₩19,000/month)</span>
+                    <span className="ml-3">정규 회원 (₩19,000/월)</span>
                   </label>
                   <label className="flex items-center">
                     <input 
@@ -195,7 +195,7 @@ export default function JoinUs() {
                       onChange={(e) => setFormData({ ...formData, membershipType: e.target.value })}
                       required
                     />
-                    <span className="ml-3">Dormant Member (₩5,000/month)</span>
+                    <span className="ml-3">휴면 회원 (₩5,000/월)</span>
                   </label>
                   <label className="flex items-center">
                     <input 
@@ -206,7 +206,7 @@ export default function JoinUs() {
                       onChange={(e) => setFormData({ ...formData, membershipType: e.target.value })}
                       required
                     />
-                    <span className="ml-3">Firefighter Cadet (Free)</span>
+                    <span className="ml-3">소방 간부후보생 (무료)</span>
                   </label>
                 </div>
               </div>
@@ -219,7 +219,7 @@ export default function JoinUs() {
                     onCheckedChange={(checked) => setFormData({ ...formData, agreeRules: !!checked })}
                     className="border-gray-700"
                   />
-                  <Label htmlFor="rules" className="text-white">Agree to Club Rules</Label>
+                  <Label htmlFor="rules" className="text-white">클럽 규칙에 동의</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Checkbox 
@@ -228,7 +228,7 @@ export default function JoinUs() {
                     onCheckedChange={(checked) => setFormData({ ...formData, dataConsent: !!checked })}
                     className="border-gray-700"
                   />
-                  <Label htmlFor="consent" className="text-white">Personal Data Consent</Label>
+                  <Label htmlFor="consent" className="text-white">개인정보 수집 동의</Label>
                 </div>
               </div>
 
@@ -237,7 +237,7 @@ export default function JoinUs() {
                 className="w-full bg-accent text-white hover:bg-red-600 py-4 rounded-lg font-bold text-lg"
                 disabled={applicationMutation.isPending}
               >
-                {applicationMutation.isPending ? "Submitting..." : "Submit Application"}
+                {applicationMutation.isPending ? "제출 중..." : "신청서 제출"}
               </Button>
             </form>
           </div>

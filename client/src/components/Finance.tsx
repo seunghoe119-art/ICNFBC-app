@@ -8,7 +8,7 @@ export default function Finance() {
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black text-black mb-6">Open Finance</h2>
           <p className="text-xl text-gray-600 font-light max-w-3xl mx-auto">
-            Monthly income, expenses, and balance are published for members.
+            회원들을 위해 월간 수입, 지출, 잔액을 공개합니다.
           </p>
         </div>
 
@@ -18,7 +18,7 @@ export default function Finance() {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <DollarSign className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="font-bold text-2xl mb-2">Monthly Income</h3>
+              <h3 className="font-bold text-2xl mb-2">월간 수입</h3>
               <p className="text-3xl font-black text-green-600">₩850,000</p>
             </div>
 
@@ -26,7 +26,7 @@ export default function Finance() {
               <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CreditCard className="w-8 h-8 text-red-600" />
               </div>
-              <h3 className="font-bold text-2xl mb-2">Monthly Expenses</h3>
+              <h3 className="font-bold text-2xl mb-2">월간 지출</h3>
               <p className="text-3xl font-black text-red-600">₩740,000</p>
             </div>
 
@@ -34,39 +34,39 @@ export default function Finance() {
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <BarChart3 className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="font-bold text-2xl mb-2">Balance</h3>
+              <h3 className="font-bold text-2xl mb-2">잔액</h3>
               <p className="text-3xl font-black text-blue-600">₩110,000</p>
             </div>
           </div>
 
           <div className="border-t border-gray-200 pt-8">
-            <h4 className="font-bold text-xl mb-6">Expense Breakdown</h4>
+            <h4 className="font-bold text-xl mb-6">지출 내역</h4>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <div className="flex justify-between py-2">
-                  <span className="text-gray-700">Venue fees (weekly)</span>
+                  <span className="text-gray-700">체육관 대여료 (주간)</span>
                   <span className="font-medium">₩400,000</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-gray-700">Equipment & supplies</span>
+                  <span className="text-gray-700">장비 및 용품</span>
                   <span className="font-medium">₩150,000</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-gray-700">Beverages</span>
+                  <span className="text-gray-700">음료수</span>
                   <span className="font-medium">₩40,000</span>
                 </div>
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between py-2">
-                  <span className="text-gray-700">Tournament fees</span>
+                  <span className="text-gray-700">토너먼트 참가비</span>
                   <span className="font-medium">₩100,000</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-gray-700">Insurance</span>
+                  <span className="text-gray-700">보험료</span>
                   <span className="font-medium">₩30,000</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-gray-700">Miscellaneous</span>
+                  <span className="text-gray-700">기타</span>
                   <span className="font-medium">₩20,000</span>
                 </div>
               </div>
@@ -75,7 +75,7 @@ export default function Finance() {
 
           <div className="mt-8 text-center">
             <Button className="bg-accent text-white hover:bg-red-600 rounded-full px-8 py-3">
-              View Monthly Report
+              월간 보고서 보기
             </Button>
           </div>
         </div>

@@ -1,18 +1,18 @@
 const scheduleItems = [
   {
-    title: "Wednesday Practice",
+    title: "수요일 연습",
     time: "8:00 PM",
-    location: "Gym A",
+    location: "체육관 A",
   },
   {
-    title: "Saturday Scrimmage",
+    title: "토요일 스크리미지",
     time: "5:00 PM",
-    location: "Court B - Friendly Match",
+    location: "코트 B - 친선 경기",
   },
   {
-    title: "Friday Training",
+    title: "금요일 훈련",
     time: "7:30 PM",
-    location: "Tactical Development",
+    location: "전술 개발",
   },
 ];
 
@@ -27,7 +27,7 @@ export default function Schedule() {
               <span className="text-accent">Games</span>
             </h2>
             <p className="text-xl text-gray-400 font-light mb-12">
-              Weekly practices and friendly matches. Check the latest dates below.
+              주간 연습과 친선 경기 일정입니다. 최신 날짜를 확인하세요.
             </p>
           </div>
 
@@ -43,8 +43,8 @@ export default function Schedule() {
             ))}
 
             <div className="bg-accent/10 border border-accent rounded-xl p-6 mt-8">
-              <h4 className="font-bold text-lg mb-2">Next Big Event</h4>
-              <p className="text-gray-300">National Sports Festival Qualifiers - March 25th</p>
+              <h4 className="font-bold text-lg mb-2">다음 주요 이벤트</h4>
+              <p className="text-gray-300">전국체전 예선 - 3월 25일</p>
             </div>
           </div>
         </div>

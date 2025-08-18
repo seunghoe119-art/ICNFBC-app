@@ -2,16 +2,16 @@ import { Play } from "lucide-react";
 
 const highlights = [
   {
-    title: "Championship Victory",
-    description: "Thunder Hoops secures regional championship with outstanding team performance.",
+    title: "챔피언십 우승",
+    description: "뛰어난 팀 퍼포먼스로 지역 챔피언십을 차지한 순간입니다.",
   },
   {
-    title: "Team Chemistry",
-    description: "Watch how our tactical training translates to seamless court execution.",
+    title: "팀 케미스트리",
+    description: "전술 훈련이 코트에서 완벽한 실행으로 이어지는 모습을 확인하세요.",
   },
   {
-    title: "Training Highlights",
-    description: "Behind the scenes of our intensive 5-on-5 development sessions.",
+    title: "훈련 하이라이트",
+    description: "집중적인 5대5 개발 세션의 비하인드 스토리입니다.",
   },
 ];
 
@@ -22,7 +22,7 @@ export default function Highlights() {
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black text-black mb-6">This Week's Highlights</h2>
           <p className="text-xl text-gray-600 font-light max-w-3xl mx-auto">
-            Short clips that capture our pace and chemistry.
+            우리의 경기 템포와 팀 케미스트리를 담은 짧은 클립들입니다.
           </p>
         </div>
 

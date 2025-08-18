@@ -7,7 +7,7 @@ export default function About() {
             Same Team, Stronger Together
           </h2>
           <p className="text-2xl text-gray-600 font-light max-w-4xl mx-auto leading-relaxed">
-            We're a workplace basketball club focused on 5-on-5 fundamentals and smart team play.
+            직장 농구동호회로 5대5 기본기와 전술적인 팀플레이에 집중합니다.
           </p>
         </div>
 
@@ -26,10 +26,10 @@ export default function About() {
               <span className="text-gray-400">Grow Together.</span>
             </h2>
             <p className="text-xl text-gray-600 font-light leading-relaxed mb-8">
-              We train real 5-on-5 basketball—roles, spacing, and team tactics—so everyone improves together.
+              실전 5대5 농구를 통해 포지션별 역할, 공간 활용, 팀 전술을 익혀 모두가 함께 성장합니다.
             </p>
             <p className="text-xl text-gray-700 leading-relaxed">
-              Regular attendance builds tactics, chemistry, and trust that carries back to work.
+              꾸준한 참여로 전술 이해도와 팀워크가 향상되어 직장에서도 긍정적 영향을 미칩니다.
             </p>
 
             <div className="space-y-6">
@@ -38,8 +38,8 @@ export default function About() {
                   <div className="w-2 h-2 bg-white rounded-full"></div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-2">Structured 5-on-5 training</h3>
-                  <p className="text-gray-600">Focus on roles, spacing, and tactical sets that improve team coordination.</p>
+                  <h3 className="font-bold text-lg mb-2">체계적인 5대5 훈련</h3>
+                  <p className="text-gray-600">포지션별 역할, 공간 활용, 전술 세트를 통해 팀 조직력을 향상시킵니다.</p>
                 </div>
               </div>
 
@@ -48,8 +48,8 @@ export default function About() {
                   <div className="w-2 h-2 bg-white rounded-full"></div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-2">Inter-city friendlies & National Sports Festival</h3>
-                  <p className="text-gray-600">Competitive opportunities that challenge and develop our collective skills.</p>
+                  <h3 className="font-bold text-lg mb-2">도시간 친선경기 & 전국체전</h3>
+                  <p className="text-gray-600">경쟁적인 환경에서 우리의 집단 기술을 도전하고 발전시킬 기회를 제공합니다.</p>
                 </div>
               </div>
 
@@ -58,8 +58,8 @@ export default function About() {
                   <div className="w-2 h-2 bg-white rounded-full"></div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-2">Open finance and simple membership</h3>
-                  <p className="text-gray-600">Transparent operations with straightforward membership options for everyone.</p>
+                  <h3 className="font-bold text-lg mb-2">투명한 재정운영과 간단한 회원제</h3>
+                  <p className="text-gray-600">모든 이들을 위한 투명한 운영과 명확한 회원 옵션을 제공합니다.</p>
                 </div>
               </div>
             </div>
