@@ -11,11 +11,17 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           <div>
-            <div className="flex items-center space-x-2 mb-6">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                <span className="text-black font-bold text-sm">T</span>
-              </div>
-              <span className="font-bold text-xl">Thunder Hoops</span>
+            <div className="flex items-center space-x-3 mb-6">
+              <span className="font-extrabold text-2xl">
+                <span style={{ color: '#0099ff' }}>ICN</span>
+                <span className="mx-2" style={{ 
+                  background: 'linear-gradient(90deg, #ff4500, #ff7b00)', 
+                  WebkitBackgroundClip: 'text', 
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}>FIRE</span>
+                <span className="text-white">, F.B.C Team</span>
+              </span>
             </div>
             <p className="text-gray-400 mb-4">Building champions on and off the court since 2010.</p>
           </div>
