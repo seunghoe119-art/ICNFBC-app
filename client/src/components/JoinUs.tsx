@@ -100,7 +100,7 @@ export default function JoinUs() {
                 </div>
 
                 <div className="border border-gray-700 rounded-xl p-6 hover:border-accent transition-colors">
-                  <h4 className="font-bold text-lg mb-2">소방 간부후보생</h4>
+                  <h4 className="font-bold text-lg mb-2">학교 재학생 혹은 합격자</h4>
                   <p className="text-gray-400 mb-3">응급 서비스 훈련생을 위한 특별 프로그램</p>
                   <p className="text-2xl font-bold text-green-500">무료</p>
                 </div>
@@ -206,7 +206,7 @@ export default function JoinUs() {
                       onChange={(e) => setFormData({ ...formData, membershipType: e.target.value })}
                       required
                     />
-                    <span className="ml-3">소방 간부후보생 (무료)</span>
+                    <span className="ml-3">학교 재학생 혹은 합격자 (무료)</span>
                   </label>
                 </div>
               </div>
