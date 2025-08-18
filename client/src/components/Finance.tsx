@@ -3,7 +3,7 @@ import { DollarSign, CreditCard, BarChart3 } from "lucide-react";
 
 export default function Finance() {
   return (
-    <section className="py-32 bg-gray-50">
+    <section className="py-32 bg-gray-50 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black text-black mb-6">Open Finance</h2>

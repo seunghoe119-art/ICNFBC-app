@@ -10,7 +10,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden z-10">
       {/* Basketball court background */}
       <div 
         className="absolute inset-0 hero-bg"

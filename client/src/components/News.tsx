@@ -20,7 +20,7 @@ const newsItems = [
 
 export default function News() {
   return (
-    <section className="py-32 bg-black text-white">
+    <section className="py-32 bg-black text-white relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black mb-6">Latest News</h2>
