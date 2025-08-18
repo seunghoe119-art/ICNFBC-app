@@ -1,0 +1,59 @@
+import { MessageCircle, Instagram, Mail } from "lucide-react";
+
+const contactMethods = [
+  {
+    name: "KakaoTalk",
+    description: "Instant messaging",
+    icon: MessageCircle,
+    color: "yellow-400",
+    hoverColor: "yellow-400",
+  },
+  {
+    name: "Instagram",
+    description: "Follow our journey",
+    icon: Instagram,
+    color: "gradient-to-br from-purple-500 to-pink-500",
+    hoverColor: "purple-500",
+  },
+  {
+    name: "Email",
+    description: "Direct contact",
+    icon: Mail,
+    color: "blue-500",
+    hoverColor: "blue-500",
+  },
+];
+
+export default function Contact() {
+  return (
+    <section className="py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-5xl md:text-6xl font-black text-black mb-6">Say Hello</h2>
+          <p className="text-xl text-gray-600 font-light max-w-3xl mx-auto">
+            Questions about joining or practice? Message us anytime.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {contactMethods.map((method, index) => {
+            const IconComponent = method.icon;
+            return (
+              <a 
+                key={index}
+                href="#" 
+                className="group bg-gray-50 rounded-2xl p-8 text-center hover:bg-accent hover:text-white transition-all transform hover:scale-105"
+              >
+                <div className={`w-16 h-16 bg-${method.color} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white group-hover:text-${method.hoverColor}`}>
+                  <IconComponent className="w-8 h-8" />
+                </div>
+                <h3 className="font-bold text-xl mb-2">{method.name}</h3>
+                <p className="text-gray-600 group-hover:text-white/80">{method.description}</p>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
