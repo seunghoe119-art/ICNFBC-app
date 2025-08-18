@@ -1,0 +1,156 @@
+awesome—here’s a clean, Apple-meets-Nike content pack (no code) you can paste into Replit AI.
+Top nav stays minimal: Home · About Us · Rules · Join Us. Everything else appears as scroll sections on Home.
+
+Home
+
+Hero
+
+Headline: BEYOND THE COURT
+
+Subtext: Community. Energy. Basketball.
+
+CTAs: Join Us · Learn More
+
+Section: What We’re About
+
+Headline: Play Hard. Grow Together.
+
+Copy: We train real 5-on-5 basketball—roles, spacing, and team tactics—so everyone improves together.
+
+Section: Highlights
+
+Headline: This Week’s Highlights
+
+Copy: Short clips that capture our pace and chemistry.
+
+Note: (Embed 2–3 YouTube videos)
+
+Section: Schedule
+
+Headline: Practice & Games
+
+Copy: Weekly practices and friendly matches. Check the latest dates below.
+
+Items (sample): Wed 8:00 PM – Gym A · Sat 5:00 PM – Scrimmage
+
+Section: Tournaments
+
+Headline: Nationwide & Friendlies
+
+Copy: We join the National Sports Festival annually and play inter-city friendlies. Travel is handled per agency policy (business-trip status).
+
+Section: Finance Transparency
+
+Headline: Open Finance
+
+Copy: Monthly income, expenses, and balance are published for members.
+
+Note: (Embed public Google Sheet or upload monthly snapshot)
+
+Section: News
+
+Headline: Latest News
+
+Cards: Game recaps, announcements, photos.
+
+Section: Contact
+
+Headline: Say Hello
+
+Copy: Questions about joining or practice? Message us anytime.
+
+Links: KakaoTalk / Instagram / Email
+
+About Us (page)
+
+Hero: Same Team, Stronger Together.
+
+Paragraph 1: We’re a workplace basketball club focused on 5-on-5 fundamentals and smart team play.
+
+Paragraph 2: Regular attendance builds tactics, chemistry, and trust that carries back to work.
+
+Bullets:
+
+Structured 5-on-5 training (roles, spacing, sets)
+
+Inter-city friendlies & National Sports Festival
+
+Open finance and simple membership
+
+Rules (page) — concise summary
+
+Membership
+
+Regular: ₩19,000 / month
+
+Dormant: ₩5,000 / month, applied in 3-month blocks (guest fee applies when attending)
+
+Firefighter cadet: Free
+
+Selection for Starters
+
+Skill level, attendance, coach’s tactical needs considered.
+
+Unless there’s clear positional/skill advantage, regular members have priority.
+
+Participation Benefits
+
+More attendance → better tactical roles, stronger team chemistry.
+
+Tournament Policy
+
+NSF entry under official business-trip status; typical flow: Day 1 Qualifiers → Day 2 Main Round (win to extend to Day 3). Travel per guidelines: meal, per-diem, lodging.
+
+Operations
+
+Venue fee ≈ ₩100,000 per week; beverage ≈ ₩10,000; guest revenue typically ≈ ₩50,000. We must collect ≥ ₩50,000 in dues monthly to operate.
+
+If total monthly dues ≥ ₩50,000 and guest fees together cover venue costs, the game organizer may receive a one-month dues waiver (₩19,000) for that session.
+
+Conduct & Safety
+
+Respect teammates, follow gym rules, wear indoor shoes.
+
+(Option: link Full Rules PDF at the bottom.)
+
+Join Us (page)
+
+Hero: Join the Team
+
+Short pitch: Ready to play real 5-on-5 and grow with a committed squad?
+
+Options:
+
+Regular Member — Best if you attend ≥2 times/month.
+
+Dormant Member — 3-month blocks; guest rate applies when attending.
+
+Firefighter Cadet — Free.
+
+Simple form fields:
+
+Name, Phone/Email, Position, Jersey size, Membership type
+
+Checkboxes: Agree to Rules · Personal Data Consent
+
+CTA: Submit Application
+
+Microcopy (buttons/labels)
+
+Primary CTA: Join Us
+
+Secondary: Learn More, View Schedule, See Rules
+
+Finance: View Monthly Report
+
+News: Read Update
+
+Style notes (for the prompt)
+
+Color: black/white/gray mono; one accent team color (hover/links only).
+
+Typography: bold display headlines + light body; generous whitespace.
+
+Visuals: fullscreen, high-contrast hero; minimal cards; subtle fade/slide.
+
+No stock photos if you prefer—use text + court textures and motion.
