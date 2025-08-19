@@ -3,9 +3,9 @@ export default function Rules() {
     <section id="rules" className="py-32 bg-gray-50 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-black text-black mb-6">Club Rules</h2>
+          <h2 className="text-5xl md:text-6xl font-black text-black mb-6">Club Guidelines</h2>
           <p className="text-xl text-gray-600 font-light max-w-3xl mx-auto">
-            커뮤니티를 강하고 집중적으로 유지하는 간단한 가이드라인입니다.
+            커뮤니티를 더욱 강화하고 집중하여 유지하기 위한 간단한 운영 지침입니다.
           </p>
         </div>
 
@@ -15,37 +15,38 @@ export default function Rules() {
             <div className="space-y-4">
               <div className="border-l-4 border-green-500 pl-4">
                 <h4 className="font-bold">정규 회원</h4>
-                <p className="text-gray-600">₩19,000 / 월</p>
+                <p className="text-gray-600">₩20,000 / 월</p>
               </div>
               <div className="border-l-4 border-blue-500 pl-4">
                 <h4 className="font-bold">휴면 회원</h4>
-                <p className="text-gray-600">₩5,000 / 월 (3개월 단위)</p>
+                <p className="text-gray-600">₩5,000 / 월 (3개월 단위) <br />게스트비 7천원</p>
               </div>
               <div className="border-l-4 border-accent pl-4">
-                <h4 className="font-bold">소방 간부후보생</h4>
-                <p className="text-gray-600">무료</p>
+                <h4 className="font-bold">합격자 및 신임 교육 재학생</h4>
+                <p className="text-gray-600">게스트비 7천원 무료</p>
               </div>
             </div>
           </div>
 
           <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h3 className="font-bold text-2xl mb-6">선발 기준</h3>
+            <h3 className="font-bold text-2xl mb-6">대회 선발 기준</h3>
             <ul className="space-y-3 text-gray-700">
               <li className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
-                <span>실력 수준 고려</span>
+                <span>개인 실력 고려</span>
               </li>
               <li className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
-                <span>출석률 추적</span>
+                <span>연습경기 참여 횟수 및 출석률</span>
               </li>
               <li className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
-                <span>감독의 전술적 필요</span>
+                <span>감독의 전술 요구사항 이행</span>
               </li>
               <li className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
-                <span>정규 회원 우선권</span>
+                <span>동료들과의 팀워크 및 협동심 기여도</span>
+          
               </li>
             </ul>
           </div>
