@@ -44,7 +44,11 @@ export default function Contact() {
                 href="#" 
                 className="group bg-gray-50 rounded-2xl p-8 text-center hover:bg-accent hover:text-white transition-all transform hover:scale-105"
               >
-                <div className={`w-16 h-16 bg-${method.color} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white group-hover:text-${method.hoverColor}`}>
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white transition-colors ${
+                  method.name === "카카오톡" ? "bg-yellow-400 group-hover:text-yellow-400" :
+                  method.name === "인스타그램" ? "bg-gradient-to-br from-purple-500 to-pink-500 group-hover:text-purple-500" :
+                  "bg-blue-500 group-hover:text-blue-500"
+                }`}>
                   <IconComponent className="w-8 h-8" />
                 </div>
                 <h3 className="font-bold text-xl mb-2">{method.name}</h3>

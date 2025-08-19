@@ -6,7 +6,6 @@ export default function Tournaments() {
           <h2 className="text-5xl md:text-6xl font-black text-black mb-6">Nationwide & Friendlies</h2>
           <p className="text-xl text-gray-600 font-light max-w-4xl mx-auto">
             매년 전국체전에 참가하고 도시간 대회 본선 경기를 진행합니다.<br />(서울 인천 경기북부,남부 강원 충북 충남 전북 전남 경북 경남 부산 대구 울산 세종 제주도)
-            
           </p>
         </div>
 
