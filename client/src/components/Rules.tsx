@@ -59,12 +59,8 @@ export default function Rules() {
           <div className="bg-white rounded-2xl p-8 shadow-lg">
             <h3 className="font-bold text-2xl mb-6">재정 사용처</h3>
             <p className="text-gray-700 mb-4">
-              체육관 대관료<br />연습 경기 비용<br /> 체육 용품<br />
+              체육관 대관료<br />연습 경기 비용<br />체육 용품<br />비품 및 소모품 구입비<br />대회 숙박 예약금 및 긴급경비<br />
             </p>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <h4 className="font-bold text-sm mb-2">월간 운영비</h4>
-              <p className="text-sm text-gray-600">운영을 위해 ≥ ₩50,000 회비 필요</p>
-            </div>
           </div>
 
           <div className="bg-white rounded-2xl p-8 shadow-lg">
