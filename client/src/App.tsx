@@ -22,35 +22,35 @@ function Router() {
       <div className="min-h-screen flex flex-col">
         <Navigation />
         <main className="flex-1 relative overflow-hidden">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="sync" initial={false}>
             <Switch>
               <Route path="/" component={() => (
-                <PageTransition>
+                <PageTransition key="/">
                   <HomePage />
                 </PageTransition>
               )} />
               <Route path="/about" component={() => (
-                <PageTransition>
+                <PageTransition key="/about">
                   <AboutPage />
                 </PageTransition>
               )} />
               <Route path="/rules" component={() => (
-                <PageTransition>
+                <PageTransition key="/rules">
                   <RulesPage />
                 </PageTransition>
               )} />
               <Route path="/finance" component={() => (
-                <PageTransition>
+                <PageTransition key="/finance">
                   <FinancePage />
                 </PageTransition>
               )} />
               <Route path="/contact" component={() => (
-                <PageTransition>
+                <PageTransition key="/contact">
                   <ContactPage />
                 </PageTransition>
               )} />
               <Route component={() => (
-                <PageTransition>
+                <PageTransition key="404">
                   <NotFound />
                 </PageTransition>
               )} />

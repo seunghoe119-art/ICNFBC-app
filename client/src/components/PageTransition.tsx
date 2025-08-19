@@ -14,15 +14,15 @@ export default function PageTransition({ children }: PageTransitionProps) {
   const direction = getDirection(location);
 
   const slideVariants = {
-    enter: (direction: number) => ({
+    initial: (direction: number) => ({
       x: direction > 0 ? "100%" : "-100%",
       opacity: 1
     }),
-    center: {
+    in: {
       x: 0,
       opacity: 1
     },
-    exit: (direction: number) => ({
+    out: (direction: number) => ({
       x: direction > 0 ? "-100%" : "100%",
       opacity: 1
     })
@@ -30,20 +30,18 @@ export default function PageTransition({ children }: PageTransitionProps) {
 
   return (
     <motion.div
-      key={location}
       custom={direction}
       variants={slideVariants}
-      initial="enter"
-      animate="center"
-      exit="exit"
+      initial="initial"
+      animate="in"
+      exit="out"
       transition={{
         type: "tween",
-        ease: "easeInOut",
-        duration: 0.5,
-        stiffness: 300,
-        damping: 30
+        ease: [0.22, 1, 0.36, 1],
+        duration: 0.6
       }}
       className="absolute inset-0 w-full h-full overflow-y-auto bg-white"
+      style={{ zIndex: 1 }}
     >
       <div className="min-h-full">
         {children}
