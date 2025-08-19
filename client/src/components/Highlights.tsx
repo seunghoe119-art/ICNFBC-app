@@ -2,20 +2,20 @@ import { Play, ExternalLink } from "lucide-react";
 
 const highlights = [
   {
-    title: "챔피언십 우승",
-    description: "뛰어난 팀 퍼포먼스로 지역 챔피언십을 차지한 순간입니다.",
+    title: "삼성썬더스 영상 예정",
+    description: "새로운 코트에서의 경기 업로드 예정중",
     type: "image"
   },
   {
-    title: "팀 케미스트리",
-    description: "전술 훈련이 코트에서 완벽한 실행으로 이어지는 모습을 확인하세요.",
+    title: "전국체전 후반전",
+    description: "인천vs충남 후반전",
     type: "youtube",
     youtubeId: "_omKkTU0_FQ",
     youtubeUrl: "https://youtu.be/_omKkTU0_FQ?si=uifSTutBEgLdlhWH"
   },
   {
-    title: "훈련 하이라이트",
-    description: "집중적인 5대5 개발 세션의 비하인드 스토리입니다.",
+    title: "팀fbc vs central",
+    description: "그 외 모든 영상 업로드 예정중",
     type: "youtube",
     youtubeId: "q1V5_UDKnl4",
     youtubeUrl: "https://youtu.be/q1V5_UDKnl4?si=vRu-WxLVV9h_7DR1"
