@@ -9,8 +9,8 @@ export default function Footer() {
       const scrollPosition = window.scrollY + window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
       
-      // Show footer when user is within 100px of the bottom
-      const threshold = 100;
+      // Show footer only when user is at the very bottom (within 10px)
+      const threshold = 10;
       setIsVisible(scrollPosition >= documentHeight - threshold);
     };
 
@@ -28,8 +28,8 @@ export default function Footer() {
 
     window.addEventListener("scroll", throttledHandleScroll, { passive: true });
     
-    // Check initial position
-    handleScroll();
+    // Check initial position after a small delay to ensure page is loaded
+    setTimeout(handleScroll, 100);
     
     return () => window.removeEventListener("scroll", throttledHandleScroll);
   }, []);
