@@ -7,10 +7,14 @@ This is a modern basketball club website built with React and TypeScript. The ap
 ## Recent Changes (January 2025)
 
 - **Converted from single-page to multi-page architecture**: Transformed the scroll-based single-page layout into a React Router-based multi-page structure
-- **Added page transition animations**: Implemented right-to-left slide animations using framer-motion for smooth page transitions
+- **Added page transition animations**: Implemented directional slide animations using framer-motion - pages slide left-to-right when moving to right menu items, right-to-left when moving to left menu items
+- **Implemented scroll-based navigation animations**: 
+  - Navigation hides when scrolling down and appears when scrolling up or at top
+  - Footer slides up from bottom when near end of page content
+  - Both use smooth CSS transforms with proper transition timing
 - **Restructured navigation system**: Updated Navigation and Footer components to use router links instead of scroll-to-section functionality
 - **Created page-based components**: Organized sections into dedicated pages in src/pages/ directory
-- **Fixed layout structure**: Navigation and Footer are now persistent across all pages with main content in between
+- **Enhanced layout structure**: Fixed Navigation and Footer with proper content padding to prevent overlapping
 
 ## User Preferences
 

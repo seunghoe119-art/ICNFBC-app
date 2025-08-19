@@ -5,7 +5,7 @@ import { Link } from "wouter";
 export default function Hero() {
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden z-10">
+    <section className="relative h-screen flex items-center justify-center overflow-hidden z-10 -mt-16">
       {/* Basketball court background */}
       <div 
         className="absolute inset-0 hero-bg"

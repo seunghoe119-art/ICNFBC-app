@@ -4,26 +4,43 @@ import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
 export default function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [location] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      
+      // Show navigation when at top (within 10px) or scrolling up
+      if (currentScrollY <= 10) {
+        setIsVisible(true);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down and past 100px
+        setIsVisible(false);
+        setIsMobileMenuOpen(false); // Close mobile menu when hiding
+      }
+      
+      setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? "bg-white/95 backdrop-blur-md border-b border-gray-100" : "bg-transparent"
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out transform ${
+      isVisible ? "translate-y-0" : "-translate-y-full"
+    } ${
+      lastScrollY > 50 ? "bg-white/95 backdrop-blur-sm shadow-lg" : "bg-white/90"
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">

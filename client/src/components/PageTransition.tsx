@@ -41,11 +41,9 @@ export default function PageTransition({ children }: PageTransitionProps) {
         ease: "easeInOut",
         duration: 0.6
       }}
-      className="w-full absolute inset-0 overflow-y-auto"
+      className="w-full absolute inset-0"
     >
-      <div className="min-h-full">
-        {children}
-      </div>
+      {children}
     </motion.div>
   );
 }
