@@ -111,7 +111,7 @@ export default function Rules() {
         </div>
         
         <div className="mt-12 text-center">
-          <p className="text-sm text-gray-500 italic">
+          <p className="text-xs text-amber-600 italic font-medium bg-amber-50 px-4 py-2 rounded-lg inline-block border border-amber-200">
             *월등한 실력이나 포지션 우위가 없는 한, 일반회원이 휴면회원보다 우선 기용될 수 있다.
           </p>
         </div>
