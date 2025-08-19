@@ -9,7 +9,9 @@ const highlights = [
   {
     title: "팀 케미스트리",
     description: "전술 훈련이 코트에서 완벽한 실행으로 이어지는 모습을 확인하세요.",
-    type: "image"
+    type: "youtube",
+    youtubeId: "_omKkTU0_FQ",
+    youtubeUrl: "https://youtu.be/_omKkTU0_FQ?si=uifSTutBEgLdlhWH"
   },
   {
     title: "훈련 하이라이트",
