@@ -57,9 +57,9 @@ export default function Rules() {
           </div>
 
           <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h3 className="font-bold text-2xl mb-6">참여 혜택</h3>
+            <h3 className="font-bold text-2xl mb-6">재정 사용처</h3>
             <p className="text-gray-700 mb-4">
-              더 많은 출석 → 더 나은 전술적 역할, 더 강한 팀 케미스트리
+              체육관 대관료<br />연습 경기 비용<br /> 체육 용품<br />
             </p>
             <div className="bg-gray-50 rounded-lg p-4">
               <h4 className="font-bold text-sm mb-2">월간 운영비</h4>
@@ -68,7 +68,7 @@ export default function Rules() {
           </div>
 
           <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h3 className="font-bold text-2xl mb-6">토너먼트 정책</h3>
+            <h3 className="font-bold text-2xl mb-6">작성중2</h3>
             <p className="text-gray-700 mb-4">
               전국체전 참가는 공식 출장 인정과 전액 여행비 지원.
             </p>
@@ -98,7 +98,7 @@ export default function Rules() {
           </div>
 
           <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h3 className="font-bold text-2xl mb-6">품행 & 안전</h3>
+            <h3 className="font-bold text-2xl mb-6">작성중3</h3>
             <ul className="space-y-3 text-gray-700">
               <li className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
