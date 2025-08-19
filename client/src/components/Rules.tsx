@@ -95,20 +95,30 @@ export default function Rules() {
 
           <div className="bg-white rounded-2xl p-8 shadow-lg">
             <h3 className="font-bold text-2xl mb-6">경기 운영 총괄자 특혜</h3>
-            <ul className="space-y-3 text-gray-700">
-              <li className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
-                <span>팀원 존중</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
-                <span>체육관 규칙 준수</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
-                <span>실내화 착용</span>
-              </li>
-            </ul>
+            <div className="space-y-4 text-gray-700">
+              <div className="flex items-start space-x-3">
+                <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
+                <span className="text-sm leading-relaxed">운영 주관자는 경기 준비와 책임을 맡음</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
+                <span className="text-sm leading-relaxed">운영 없이는 경기‧게스트비 수금 불가 → 필수적 역할</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
+                <span className="text-sm leading-relaxed">다른 회원도 운영에 참여하도록 동기 부여</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
+                <span className="text-sm leading-relaxed">공헌을 인정해 해당 월 회비 면제</span>
+              </div>
+            </div>
+            
+            <div className="mt-6 pt-4 border-t border-gray-100">
+              <p className="text-xs text-blue-600 italic font-medium">
+                *회비+게스트비 합산 주 10만원 충족 시 적용
+              </p>
+            </div>
           </div>
         </div>
       </div>
