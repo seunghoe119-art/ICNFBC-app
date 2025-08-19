@@ -22,7 +22,7 @@ function Router() {
     <NavigationProvider>
       <div className="min-h-screen flex flex-col">
         <Navigation />
-        <main className="flex-1 relative overflow-hidden">
+        <main className="flex-1 relative overflow-hidden pb-32">
           <AnimatePresence mode="wait">
             <Switch>
               <Route path="/" component={() => (
