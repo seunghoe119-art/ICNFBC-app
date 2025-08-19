@@ -8,7 +8,6 @@ import { ScrollGradient } from "./components/ScrollGradient";
 import { AnimatePresence } from "framer-motion";
 import { NavigationProvider } from "@/contexts/NavigationContext";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import HomePage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
@@ -22,7 +21,7 @@ function Router() {
     <NavigationProvider>
       <div className="min-h-screen flex flex-col">
         <Navigation />
-        <main className="flex-1 relative overflow-hidden pb-40">
+        <main className="flex-1 relative overflow-hidden">
           <AnimatePresence mode="wait">
             <Switch>
               <Route path="/" component={() => (
@@ -58,7 +57,6 @@ function Router() {
             </Switch>
           </AnimatePresence>
         </main>
-        <Footer />
       </div>
     </NavigationProvider>
   );
