@@ -1,28 +1,9 @@
 import { Link } from "wouter";
-import { useState, useEffect } from "react";
 
 export default function Footer() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight;
-      const scrollTop = document.documentElement.scrollTop;
-      const clientHeight = document.documentElement.clientHeight;
-      
-      // Show footer when user is near the bottom (within 200px of bottom)
-      const isNearBottom = scrollTop + clientHeight >= scrollHeight - 200;
-      setIsVisible(isNearBottom);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
-    <footer className={`bg-black text-white py-16 w-full transition-all duration-500 ease-in-out ${
-      isVisible ? "transform translate-y-0" : "transform translate-y-full"
-    }`}>
+    <footer className="bg-black text-white py-16 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           <div>
