@@ -84,7 +84,7 @@ export default function JoinUs() {
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div className="space-y-8">
             <div className="bg-gray-900 rounded-2xl p-8">
-              <h3 className="font-bold text-2xl mb-4">회원 옵션</h3>
+              <h3 className="font-bold text-2xl mb-4">회비 안내</h3>
               
               <div className="space-y-6">
                 <div className="border border-gray-700 rounded-xl p-6 hover:border-accent transition-colors">
@@ -95,13 +95,13 @@ export default function JoinUs() {
 
                 <div className="border border-gray-700 rounded-xl p-6 hover:border-accent transition-colors">
                   <h4 className="font-bold text-lg mb-2">휴면 회원</h4>
-                  <p className="text-gray-400 mb-3">3개월 단위; 참석 시 게스트 요금 적용</p>
+                  <p className="text-gray-400 mb-3">3개월 단위로 신청가능; 참석 시 게스트 요금 적용</p>
                   <p className="text-2xl font-bold text-accent">₩5,000/월</p>
                 </div>
 
                 <div className="border border-gray-700 rounded-xl p-6 hover:border-accent transition-colors">
                   <h4 className="font-bold text-lg mb-2">학교 재학생 혹은 합격자</h4>
-                  <p className="text-gray-400 mb-3">응급 서비스 훈련생을 위한 특별 프로그램</p>
+                  <p className="text-gray-400 mb-3">증빙자료와 함께 담당자에게 개인 연락</p>
                   <p className="text-2xl font-bold text-green-500">무료</p>
                 </div>
               </div>

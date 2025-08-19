@@ -7,7 +7,7 @@ export default function About() {
             Same Team, Stronger Together
           </h2>
           <p className="text-2xl text-gray-600 font-light max-w-4xl mx-auto leading-relaxed">
-            직장 농구동호회로 5대5 기본기와 전술적인 팀플레이에 집중합니다.
+            하나로 연결된 플레이, 함께 성장한다
           </p>
         </div>
 
@@ -26,10 +26,10 @@ export default function About() {
               <span className="text-gray-400">Grow Together.</span>
             </h2>
             <p className="text-xl text-gray-600 font-light leading-relaxed mb-8">
-              실전 5대5 농구를 통해 포지션별 역할, 공간 활용, 팀 전술을 익혀 모두가 함께 성장합니다.
+              정규코트 5대5 농구를 통해 포지션별 역할, 공간 활용, 팀 전술을 익혀 모두가 함께 성장합니다.
             </p>
             <p className="text-xl text-gray-700 leading-relaxed">
-              꾸준한 참여로 전술 이해도와 팀워크가 향상되어 직장에서도 긍정적 영향을 미칩니다.
+              꾸준한 참여로 전술 이해도와 팀워크가 향상되어 <br /> 팀농구를 배울 수 있습니다.
             </p>
 
             <div className="space-y-6">
@@ -48,8 +48,8 @@ export default function About() {
                   <div className="w-2 h-2 bg-white rounded-full"></div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-2">도시간 친선경기 & 전국체전</h3>
-                  <p className="text-gray-600">경쟁적인 환경에서 우리의 집단 기술을 도전하고 발전시킬 기회를 제공합니다.</p>
+                  <h3 className="font-bold text-lg mb-2">팀별 친선경기 & 전국체전</h3>
+                  <p className="text-gray-600">경쟁적인 환경에서 우리의 집단 기술을 도전하고 발전시킬  <br />기회를 제공합니다.</p>
                 </div>
               </div>
 
@@ -58,8 +58,8 @@ export default function About() {
                   <div className="w-2 h-2 bg-white rounded-full"></div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg mb-2">투명한 재정운영과 간단한 회원제</h3>
-                  <p className="text-gray-600">모든 이들을 위한 투명한 운영과 명확한 회원 옵션을 제공합니다.</p>
+                  <h3 className="font-bold text-lg mb-2">누구나 즐기는 농구</h3>
+                  <p className="text-gray-600">농구 경험이 없어도 환영! 기초부터 차근차근 배워갈 수 있는 환경을  <br /> 제공합니다.</p>
                 </div>
               </div>
             </div>
