@@ -5,21 +5,22 @@ export default function Tournaments() {
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black text-black mb-6">Nationwide & Friendlies</h2>
           <p className="text-xl text-gray-600 font-light max-w-4xl mx-auto">
-            매년 전국체전에 참가하고 도시간 친선 경기를 진행합니다. 출장은 회사 정책에 따라 처리됩니다(출장 상태).
+            매년 전국체전에 참가하고 도시간 대회 본선 경기를 진행합니다.<br />(서울 인천 경기북부,남부 강원 충북 충남 전북 전남 경북 경남 부산 대구 울산 세종 제주도)
+            
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-12">
           <div className="relative">
             <img 
-              src="https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
+              src="/group image.jpg" 
               alt="Team celebration after tournament victory" 
               className="rounded-2xl shadow-xl w-full"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl"></div>
             <div className="absolute bottom-6 left-6 text-white">
-              <h3 className="font-bold text-xl mb-2">전국체육대회</h3>
-              <p className="text-white/80">연례 챔피언십 토너먼트</p>
+              <h3 className="font-bold text-xl mb-2">전국체전대회</h3>
+              <p className="text-white/80">챔피언십 토너먼트</p>
             </div>
           </div>
 
@@ -59,7 +60,7 @@ export default function Tournaments() {
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-bold text-sm">3</div>
-                  <span className="text-gray-500">3일차: 결승 (진출 시)</span>
+                  <span className="text-gray-500">3일차: 8강 및 결승 (진출 시)</span>
                 </div>
               </div>
             </div>

@@ -49,7 +49,7 @@ export default function About() {
                 </div>
                 <div>
                   <h3 className="font-bold text-lg mb-2">팀별 친선경기 & 전국체전</h3>
-                  <p className="text-gray-600">경쟁적인 환경에서 우리의 집단 기술을 도전하고 발전시킬  <br />기회를 제공합니다.</p>
+                  <p className="text-gray-600">경쟁적인 환경에서 우리의 집단 기술을 도전하고 발전할 <br /> 기회를 제공합니다.</p>
                 </div>
               </div>
 
@@ -59,7 +59,7 @@ export default function About() {
                 </div>
                 <div>
                   <h3 className="font-bold text-lg mb-2">누구나 즐기는 농구</h3>
-                  <p className="text-gray-600">농구 경험이 없어도 환영! 기초부터 차근차근 배워갈 수 있는 환경을  <br /> 제공합니다.</p>
+                  <p className="text-gray-600">농구 경험이 없어도 환영! 기초부터 차근차근 배워가는 <br />환경을 제공합니다.</p>
                 </div>
               </div>
             </div>

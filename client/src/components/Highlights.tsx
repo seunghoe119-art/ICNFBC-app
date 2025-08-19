@@ -27,9 +27,9 @@ export default function Highlights() {
     <section className="py-32 bg-gray-50 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-black text-black mb-6">This Week on the Court</h2>
+          <h2 className="text-5xl md:text-6xl font-black text-black mb-6">Last Week on the Court</h2>
           <p className="text-xl text-gray-600 font-light max-w-3xl mx-auto">
-            이번 주 코트 위 순간들
+            지난 주 코트 위 순간들
           </p>
         </div>
 
