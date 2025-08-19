@@ -29,6 +29,24 @@ export default function Schedule() {
             <p className="text-xl text-gray-400 font-light mb-12">
               주간 연습과 친선 경기 일정입니다. 최신 날짜를 확인하세요.
             </p>
+            
+            {/* Court Images */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+              <div className="relative overflow-hidden rounded-xl shadow-2xl">
+                <img 
+                  src="/court1.jpg" 
+                  alt="Basketball Court 1" 
+                  className="w-full h-48 sm:h-64 object-cover transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+              <div className="relative overflow-hidden rounded-xl shadow-2xl">
+                <img 
+                  src="/court2.jpg" 
+                  alt="Basketball Court 2" 
+                  className="w-full h-48 sm:h-64 object-cover transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+            </div>
           </div>
 
           <div className="space-y-6">
