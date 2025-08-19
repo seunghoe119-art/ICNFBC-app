@@ -66,12 +66,12 @@ export default function Rules() {
           <div className="bg-white rounded-2xl p-8 shadow-lg">
             <h3 className="font-bold text-2xl mb-6">작성중2</h3>
             <p className="text-gray-700 mb-4">
-              전국체전 참가는 공식 출장 인정과 전액 여행비 지원.
+              .
             </p>
             <div className="space-y-2 text-sm text-gray-600">
-              <p>• 1일차: 예선</p>
-              <p>• 2일차: 본선</p>
-              <p>• 3일차: 결승 (진출 시)</p>
+              <p>• 1일차</p>
+              <p>• 2일차</p>
+              <p>• 3일차</p>
             </div>
           </div>
 
