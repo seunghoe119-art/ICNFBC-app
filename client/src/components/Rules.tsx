@@ -77,18 +77,18 @@ export default function Rules() {
 
           <div className="bg-white rounded-2xl p-8 shadow-lg">
             <h3 className="font-bold text-2xl mb-6">운영</h3>
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-600">체육관 대여료</span>
-                <span className="font-medium">≈ ₩100,000/주</span>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-700">체육관 대여료</span>
+                <span className="font-semibold text-lg">₩100,000 / 주</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">음료 제외한 게스트 수익</span>
-                <span className="font-medium">≈ ₩50,000</span>
+              <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                <span className="text-gray-700">음료 제외한 게스트비</span>
+                <span className="font-semibold text-lg">₩50,000</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">회비</span>
-                <span className="font-medium">≈ ₩50,000</span>
+              <div className="flex justify-between items-center py-2">
+                <span className="text-gray-700">회비</span>
+                <span className="font-semibold text-lg">₩50,000</span>
               </div>
             </div>
           </div>
