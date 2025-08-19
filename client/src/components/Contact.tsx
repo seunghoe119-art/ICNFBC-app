@@ -3,10 +3,11 @@ import { MessageCircle, Instagram, Mail } from "lucide-react";
 const contactMethods = [
   {
     name: "카카오톡",
-    description: "즉석 메시징",
+    description: "오픈톡방 링크",
     icon: MessageCircle,
     color: "yellow-400",
     hoverColor: "yellow-400",
+    url: "http://open.kakao.com/o/s5gBNvNh",
   },
   {
     name: "인스타그램",
@@ -41,7 +42,9 @@ export default function Contact() {
             return (
               <a 
                 key={index}
-                href="#" 
+                href={method.url || "#"} 
+                target={method.url ? "_blank" : "_self"}
+                rel={method.url ? "noopener noreferrer" : ""}
                 className="group bg-gray-50 rounded-2xl p-8 text-center hover:bg-accent hover:text-white transition-all transform hover:scale-105"
               >
                 <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-white transition-colors ${
