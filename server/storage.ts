@@ -44,6 +44,8 @@ export class MemStorage implements IStorage {
     const application: MembershipApplication = {
       ...insertApplication,
       id,
+      agreeRules: insertApplication.agreeRules ?? "false",
+      dataConsent: insertApplication.dataConsent ?? "false",
       createdAt: new Date(),
     };
     this.membershipApplications.set(id, application);
