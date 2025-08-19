@@ -20,46 +20,43 @@ import NotFound from "@/pages/not-found";
 function Router() {
   return (
     <NavigationProvider>
-      <div className="relative">
+      <div className="min-h-screen flex flex-col">
         <Navigation />
-        <main className="relative overflow-hidden">
-          {/* Add top padding for navigation and bottom padding for footer */}
-          <div className="pt-16 pb-80">
-            <AnimatePresence mode="wait">
-              <Switch>
-                <Route path="/" component={() => (
-                  <PageTransition>
-                    <HomePage />
-                  </PageTransition>
-                )} />
-                <Route path="/about" component={() => (
-                  <PageTransition>
-                    <AboutPage />
-                  </PageTransition>
-                )} />
-                <Route path="/rules" component={() => (
-                  <PageTransition>
-                    <RulesPage />
-                  </PageTransition>
-                )} />
-                <Route path="/finance" component={() => (
-                  <PageTransition>
-                    <FinancePage />
-                  </PageTransition>
-                )} />
-                <Route path="/contact" component={() => (
-                  <PageTransition>
-                    <ContactPage />
-                  </PageTransition>
-                )} />
-                <Route component={() => (
-                  <PageTransition>
-                    <NotFound />
-                  </PageTransition>
-                )} />
-              </Switch>
-            </AnimatePresence>
-          </div>
+        <main className="flex-1 relative overflow-hidden">
+          <AnimatePresence mode="wait">
+            <Switch>
+              <Route path="/" component={() => (
+                <PageTransition>
+                  <HomePage />
+                </PageTransition>
+              )} />
+              <Route path="/about" component={() => (
+                <PageTransition>
+                  <AboutPage />
+                </PageTransition>
+              )} />
+              <Route path="/rules" component={() => (
+                <PageTransition>
+                  <RulesPage />
+                </PageTransition>
+              )} />
+              <Route path="/finance" component={() => (
+                <PageTransition>
+                  <FinancePage />
+                </PageTransition>
+              )} />
+              <Route path="/contact" component={() => (
+                <PageTransition>
+                  <ContactPage />
+                </PageTransition>
+              )} />
+              <Route component={() => (
+                <PageTransition>
+                  <NotFound />
+                </PageTransition>
+              )} />
+            </Switch>
+          </AnimatePresence>
         </main>
         <Footer />
       </div>
