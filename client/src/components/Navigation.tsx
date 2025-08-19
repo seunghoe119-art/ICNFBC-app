@@ -62,6 +62,12 @@ export default function Navigation() {
               Rules
             </button>
             <button 
+              onClick={() => scrollToSection("finance")}
+              className="text-gray-600 font-medium transition-all duration-200 ease-out hover:text-[#e60000] hover:font-bold hover:scale-105 hover:-translate-y-0.5 hover:drop-shadow-md focus-visible:text-[#e60000] focus-visible:font-bold focus-visible:underline focus-visible:outline-none"
+            >
+              Finance
+            </button>
+            <button 
               onClick={() => scrollToSection("join")}
               className="text-gray-600 font-medium transition-all duration-200 ease-out hover:text-[#e60000] hover:font-bold hover:scale-105 hover:-translate-y-0.5 hover:drop-shadow-md focus-visible:text-[#e60000] focus-visible:font-bold focus-visible:underline focus-visible:outline-none"
             >
@@ -108,6 +114,12 @@ export default function Navigation() {
                 className="block w-full text-left px-3 py-2 text-gray-600 font-medium transition-all duration-200 ease-out hover:text-[#e60000] hover:font-bold hover:scale-105 hover:-translate-y-0.5 hover:drop-shadow-md focus-visible:text-[#e60000] focus-visible:font-bold focus-visible:underline focus-visible:outline-none"
               >
                 Rules
+              </button>
+              <button 
+                onClick={() => scrollToSection("finance")}
+                className="block w-full text-left px-3 py-2 text-gray-600 font-medium transition-all duration-200 ease-out hover:text-[#e60000] hover:font-bold hover:scale-105 hover:-translate-y-0.5 hover:drop-shadow-md focus-visible:text-[#e60000] focus-visible:font-bold focus-visible:underline focus-visible:outline-none"
+              >
+                Finance
               </button>
               <button 
                 onClick={() => scrollToSection("join")}
