@@ -48,6 +48,12 @@ export default function Rules() {
                 <span>동료들과의 팀워크 및 협동심</span>
               </li>
             </ul>
+            
+            <div className="mt-6">
+              <p className="text-xs text-amber-600 italic font-medium bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">
+                *월등한 실력이나 포지션 우위가 없는 한, 일반회원이 휴면회원보다 우선 기용될 수 있다.
+              </p>
+            </div>
           </div>
 
           <div className="bg-white rounded-2xl p-8 shadow-lg">
@@ -108,12 +114,6 @@ export default function Rules() {
               </li>
             </ul>
           </div>
-        </div>
-        
-        <div className="mt-12 text-center">
-          <p className="text-xs text-amber-600 italic font-medium bg-amber-50 px-4 py-2 rounded-lg inline-block border border-amber-200">
-            *월등한 실력이나 포지션 우위가 없는 한, 일반회원이 휴면회원보다 우선 기용될 수 있다.
-          </p>
         </div>
       </div>
     </section>
