@@ -14,8 +14,8 @@ export default function About() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <img 
-              src="https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1000" 
-              alt="Basketball team in huddle showing unity" 
+              src="public/20250819_150415440_iOS.jpg" 
+              alt="Basketball team" 
               className="rounded-2xl shadow-2xl"
             />
           </div>

@@ -20,9 +20,9 @@ export default function Highlights() {
     <section className="py-32 bg-gray-50 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-black text-black mb-6">This Week's Highlights</h2>
+          <h2 className="text-5xl md:text-6xl font-black text-black mb-6">This Week on the Court</h2>
           <p className="text-xl text-gray-600 font-light max-w-3xl mx-auto">
-            우리의 경기 템포와 팀 케미스트리를 담은 짧은 클립들입니다.
+            이번 주 코트 위 순간들
           </p>
         </div>
 
