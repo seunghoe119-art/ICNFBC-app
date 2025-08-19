@@ -2,6 +2,7 @@ import { createContext, useContext, useRef, ReactNode } from "react";
 
 interface NavigationContextType {
   getDirection: (currentPath: string) => number;
+  setDirection: (targetPath: string) => void;
 }
 
 const NavigationContext = createContext<NavigationContextType | undefined>(undefined);
@@ -23,23 +24,27 @@ const menuOrder = ["/", "/about", "/rules", "/finance", "/contact"];
 
 export const NavigationProvider = ({ children }: NavigationProviderProps) => {
   const previousPathRef = useRef("/");
+  const directionRef = useRef(1);
 
   const getDirection = (currentPath: string) => {
-    const currentIndex = menuOrder.indexOf(currentPath);
-    const previousIndex = menuOrder.indexOf(previousPathRef.current);
+    return directionRef.current;
+  };
+
+  const setDirection = (targetPath: string) => {
+    const currentIndex = menuOrder.indexOf(previousPathRef.current);
+    const targetIndex = menuOrder.indexOf(targetPath);
     
-    if (currentIndex === -1 || previousIndex === -1) {
-      previousPathRef.current = currentPath;
-      return 1; // Default to right
+    if (currentIndex === -1 || targetIndex === -1) {
+      directionRef.current = 1; // Default to right
+    } else {
+      directionRef.current = targetIndex > currentIndex ? 1 : -1; // 1 for right, -1 for left
     }
     
-    const direction = currentIndex > previousIndex ? 1 : -1; // 1 for right, -1 for left
-    previousPathRef.current = currentPath;
-    return direction;
+    previousPathRef.current = targetPath;
   };
 
   return (
-    <NavigationContext.Provider value={{ getDirection }}>
+    <NavigationContext.Provider value={{ getDirection, setDirection }}>
       {children}
     </NavigationContext.Provider>
   );

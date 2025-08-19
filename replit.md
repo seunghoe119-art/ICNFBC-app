@@ -4,13 +4,15 @@
 
 This is a modern basketball club website built with React and TypeScript. The application serves as a landing page and membership portal for "ICN FIRE," a workplace basketball club that focuses on structured 5-on-5 training and team development. The site features a multi-page design with smooth slide animations between pages, including home, about, rules, finance, and contact pages with membership application functionality.
 
-## Recent Changes (January 2025)
+## Recent Changes (August 2025)
 
+- **Enhanced page transition animations**: Implemented bidirectional slide animations where both current and new pages move simultaneously
+- **Improved navigation direction logic**: Added context-based direction detection that determines slide direction based on menu order
 - **Converted from single-page to multi-page architecture**: Transformed the scroll-based single-page layout into a React Router-based multi-page structure
-- **Added page transition animations**: Implemented right-to-left slide animations using framer-motion for smooth page transitions
-- **Restructured navigation system**: Updated Navigation and Footer components to use router links instead of scroll-to-section functionality
+- **Added page transition animations**: Implemented directional slide animations using framer-motion for smooth page transitions
+- **Restructured navigation system**: Updated Navigation component to use router links with direction detection
 - **Created page-based components**: Organized sections into dedicated pages in src/pages/ directory
-- **Fixed layout structure**: Navigation and Footer are now persistent across all pages with main content in between
+- **Removed Footer component**: Simplified layout to Navigation and main content only
 
 ## User Preferences
 
