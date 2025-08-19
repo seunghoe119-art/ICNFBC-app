@@ -13,10 +13,10 @@ export default function PageTransition({ children }: PageTransitionProps) {
   
   const direction = getDirection(location);
 
-  const variants = {
+  const slideVariants = {
     enter: (direction: number) => ({
       x: direction > 0 ? "100%" : "-100%",
-      opacity: 0
+      opacity: 1
     }),
     center: {
       x: 0,
@@ -24,7 +24,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
     },
     exit: (direction: number) => ({
       x: direction > 0 ? "-100%" : "100%",
-      opacity: 0
+      opacity: 1
     })
   };
 
@@ -32,18 +32,19 @@ export default function PageTransition({ children }: PageTransitionProps) {
     <motion.div
       key={location}
       custom={direction}
-      variants={variants}
+      variants={slideVariants}
       initial="enter"
       animate="center"
       exit="exit"
       transition={{
         type: "tween",
-        ease: "easeInOut",
-        duration: 0.6
+        ease: [0.22, 1, 0.36, 1],
+        duration: 0.8
       }}
       className="w-full absolute inset-0 overflow-y-auto"
+      style={{ willChange: "transform" }}
     >
-      <div className="min-h-full">
+      <div className="min-h-full pt-16 pb-32">
         {children}
       </div>
     </motion.div>

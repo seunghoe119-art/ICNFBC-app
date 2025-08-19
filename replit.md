@@ -7,10 +7,12 @@ This is a modern basketball club website built with React and TypeScript. The ap
 ## Recent Changes (January 2025)
 
 - **Converted from single-page to multi-page architecture**: Transformed the scroll-based single-page layout into a React Router-based multi-page structure
-- **Added page transition animations**: Implemented right-to-left slide animations using framer-motion for smooth page transitions
+- **Enhanced page transition animations**: Implemented simultaneous slide transitions where both current and new pages move together using framer-motion with sync mode
+- **Added scroll-based navigation animations**: Navigation slides up/down based on scroll direction - hides when scrolling down, appears when scrolling up or at top
+- **Implemented footer scroll animations**: Footer slides up from bottom when user approaches the end of the page
 - **Restructured navigation system**: Updated Navigation and Footer components to use router links instead of scroll-to-section functionality
 - **Created page-based components**: Organized sections into dedicated pages in src/pages/ directory
-- **Fixed layout structure**: Navigation and Footer are now persistent across all pages with main content in between
+- **Improved layout structure**: Navigation and Footer now have scroll-responsive animations with proper z-index layering
 
 ## User Preferences
 
@@ -41,7 +43,8 @@ Preferred communication style: Simple, everyday language.
   - Rules (/rules): Rules, JoinUs
   - Finance (/finance): Finance
   - Join Us (/contact): Contact
-- **Page Transitions**: Right-to-left slide animations using framer-motion
+- **Page Transitions**: Simultaneous bidirectional slide animations using framer-motion with sync mode for natural page flow
+- **Scroll Animations**: Navigation auto-hides on scroll down, Footer appears when approaching page bottom
 - **Component Structure**: Modular section-based components organized into page layouts
 - **Design System**: Consistent design tokens using CSS custom properties
 - **Responsive Design**: Mobile-first approach with Tailwind CSS breakpoints

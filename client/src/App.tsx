@@ -20,10 +20,10 @@ import NotFound from "@/pages/not-found";
 function Router() {
   return (
     <NavigationProvider>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen relative">
         <Navigation />
-        <main className="flex-1 relative overflow-hidden">
-          <AnimatePresence mode="wait">
+        <main className="relative overflow-hidden">
+          <AnimatePresence mode="sync" initial={false}>
             <Switch>
               <Route path="/" component={() => (
                 <PageTransition>
@@ -58,7 +58,9 @@ function Router() {
             </Switch>
           </AnimatePresence>
         </main>
-        <Footer />
+        <div className="fixed bottom-0 left-0 right-0 z-40">
+          <Footer />
+        </div>
       </div>
     </NavigationProvider>
   );
