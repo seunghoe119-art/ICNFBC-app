@@ -45,8 +45,7 @@ export default function Rules() {
               </li>
               <li className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
-                <span>동료들과의 팀워크 및 협동심 기여도</span>
-          
+                <span>동료들과의 팀워크 및 협동심</span>
               </li>
             </ul>
           </div>
@@ -109,6 +108,12 @@ export default function Rules() {
               </li>
             </ul>
           </div>
+        </div>
+        
+        <div className="mt-12 text-center">
+          <p className="text-sm text-gray-500 italic">
+            *월등한 실력이나 포지션 우위가 없는 한, 일반회원이 휴면회원보다 우선 기용될 수 있다.
+          </p>
         </div>
       </div>
     </section>
