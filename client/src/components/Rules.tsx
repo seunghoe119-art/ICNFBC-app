@@ -5,7 +5,7 @@ export default function Rules() {
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black text-black mb-6">Club Guidelines</h2>
           <p className="text-xl text-gray-600 font-light max-w-3xl mx-auto">
-            커뮤니티를 더욱 강화하고 집중하여 유지하기 위한 간단한 운영 지침입니다.
+            커뮤니티를 더욱 강화하고 집중하여 유지하기 위한 운영 지침 요약 카드입니다.
           </p>
         </div>
 
@@ -83,18 +83,18 @@ export default function Rules() {
                 <span className="font-medium">≈ ₩100,000/주</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">음료수</span>
-                <span className="font-medium">≈ ₩10,000</span>
+                <span className="text-gray-600">음료 제외한 게스트 수익</span>
+                <span className="font-medium">≈ ₩50,000</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">게스트 수익</span>
+                <span className="text-gray-600">회비</span>
                 <span className="font-medium">≈ ₩50,000</span>
               </div>
             </div>
           </div>
 
           <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h3 className="font-bold text-2xl mb-6">작성중3</h3>
+            <h3 className="font-bold text-2xl mb-6">경기 운영 총괄자 특혜</h3>
             <ul className="space-y-3 text-gray-700">
               <li className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-accent rounded-full mt-2"></div>
