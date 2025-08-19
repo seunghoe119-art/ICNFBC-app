@@ -2,7 +2,15 @@
 
 ## Overview
 
-This is a modern basketball club website built with React and TypeScript. The application serves as a landing page and membership portal for "Thunder Hoops," a workplace basketball club that focuses on structured 5-on-5 training and team development. The site features a single-page design with smooth scrolling sections including hero, about, highlights, schedule, tournaments, finance transparency, news, rules, and membership application functionality.
+This is a modern basketball club website built with React and TypeScript. The application serves as a landing page and membership portal for "ICN FIRE," a workplace basketball club that focuses on structured 5-on-5 training and team development. The site features a multi-page design with smooth slide animations between pages, including home, about, rules, finance, and contact pages with membership application functionality.
+
+## Recent Changes (January 2025)
+
+- **Converted from single-page to multi-page architecture**: Transformed the scroll-based single-page layout into a React Router-based multi-page structure
+- **Added page transition animations**: Implemented right-to-left slide animations using framer-motion for smooth page transitions
+- **Restructured navigation system**: Updated Navigation and Footer components to use router links instead of scroll-to-section functionality
+- **Created page-based components**: Organized sections into dedicated pages in src/pages/ directory
+- **Fixed layout structure**: Navigation and Footer are now persistent across all pages with main content in between
 
 ## User Preferences
 
@@ -26,8 +34,15 @@ Preferred communication style: Simple, everyday language.
 - **Development**: Hot module replacement via Vite middleware integration
 
 ### Component Design
-- **Layout**: Single-page application with smooth scrolling navigation
-- **Component Structure**: Modular section-based components (Hero, About, Schedule, etc.)
+- **Layout**: Multi-page application with persistent Navigation and Footer
+- **Page Structure**: 
+  - Home (/): Hero, About, Highlights, Tournaments
+  - About Us (/about): Schedule, News
+  - Rules (/rules): Rules, JoinUs
+  - Finance (/finance): Finance
+  - Join Us (/contact): Contact
+- **Page Transitions**: Right-to-left slide animations using framer-motion
+- **Component Structure**: Modular section-based components organized into page layouts
 - **Design System**: Consistent design tokens using CSS custom properties
 - **Responsive Design**: Mobile-first approach with Tailwind CSS breakpoints
 

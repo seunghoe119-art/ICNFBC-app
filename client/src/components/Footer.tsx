@@ -1,10 +1,6 @@
+import { Link } from "wouter";
+
 export default function Footer() {
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <footer className="bg-black text-white py-16 relative z-10">
@@ -29,30 +25,26 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-lg mb-4">빠른 링크</h4>
             <div className="space-y-2">
-              <button 
-                onClick={() => scrollToSection("about")}
-                className="block text-gray-400 hover:text-white transition-colors text-left"
-              >
-                우리 팀
-              </button>
-              <button 
-                onClick={() => scrollToSection("schedule")}
-                className="block text-gray-400 hover:text-white transition-colors text-left"
-              >
-                일정
-              </button>
-              <button 
-                onClick={() => scrollToSection("news")}
-                className="block text-gray-400 hover:text-white transition-colors text-left"
-              >
-                뉴스
-              </button>
-              <button 
-                onClick={() => scrollToSection("join")}
-                className="block text-gray-400 hover:text-white transition-colors text-left"
-              >
-                회원가입
-              </button>
+              <Link href="/about">
+                <span className="block text-gray-400 hover:text-white transition-colors text-left">
+                  우리 팀
+                </span>
+              </Link>
+              <Link href="/about">
+                <span className="block text-gray-400 hover:text-white transition-colors text-left">
+                  일정
+                </span>
+              </Link>
+              <Link href="/about">
+                <span className="block text-gray-400 hover:text-white transition-colors text-left">
+                  뉴스
+                </span>
+              </Link>
+              <Link href="/contact">
+                <span className="block text-gray-400 hover:text-white transition-colors text-left">
+                  회원가입
+                </span>
+              </Link>
             </div>
           </div>
 
