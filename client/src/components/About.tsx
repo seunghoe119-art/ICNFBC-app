@@ -7,7 +7,7 @@ export default function About() {
             Same Team, Stronger Together
           </h2>
           <p className="text-2xl text-gray-600 font-light max-w-4xl mx-auto leading-relaxed">
-            하나로 연결된 플레이,<br /> 함께 성장한다
+            하나로 연결된 플레이,<br />함께 성장한다.
           </p>
         </div>
 
