@@ -1,18 +1,18 @@
 const scheduleItems = [
   {
-    title: "매주 금요일 대관",
-    time: "21:00 PM",
+    title: "매주 3시간 금요일 대관",
+    time: "21:00 ~ 24:00PM",
     location: "정규 대관 체육관",
   },
   {
-    title: "토요일 스크리미지",
+    title: "초청팀 초청",
     time: ":00 PM",
-    location: "코트 B - 친선 경기",
+    location: "홈 or 원정 - 친선 경기",
   },
   {
-    title: "금요일 훈련",
-    time: ":0 PM",
-    location: "전술 개발",
+    title: "",
+    time: ": PM",
+    location: "",
   },
 ];
 
@@ -62,7 +62,7 @@ export default function Schedule() {
 
             <div className="bg-accent/10 border border-accent rounded-xl p-6 mt-8">
               <h4 className="font-bold text-lg mb-2">다음 주요 이벤트</h4>
-              <p className="text-gray-300">전국체전 예선 - 3월 25일</p>
+              <p className="text-gray-300">전국체전 - 2026년 6월 초</p>
             </div>
           </div>
         </div>
