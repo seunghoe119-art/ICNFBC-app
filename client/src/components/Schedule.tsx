@@ -6,12 +6,12 @@ const scheduleItems = [
   },
   {
     title: "초청팀 초청",
-    time: ":00 PM",
+    time: "지인 초청 가능",
     location: "홈 or 원정 - 친선 경기",
   },
   {
-    title: "",
-    time: ": PM",
+    title: "정기 교류전 팀 구인중",
+    time: " ",
     location: "",
   },
 ];

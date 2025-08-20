@@ -10,7 +10,7 @@ const contactMethods = [
     url: "http://open.kakao.com/o/s5gBNvNh",
   },
   {
-    name: "인스타그램",
+    name: "인스타그램(예정)",
     description: "우리의 여정을 팔로우하세요",
     icon: Instagram,
     color: "gradient-to-br from-purple-500 to-pink-500",

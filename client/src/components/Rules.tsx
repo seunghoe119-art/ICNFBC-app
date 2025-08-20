@@ -102,11 +102,11 @@ export default function Rules() {
               </div>
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                <span className="text-sm leading-relaxed">운영 없이는 경기‧게스트비 수금 불가 → 필수적 역할</span>
+                <span className="text-sm leading-relaxed">운영 없이는 경기‧게스트비 수금 불가<br /> → 필수적 역할</span>
               </div>
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                <span className="text-sm leading-relaxed">다른 회원도 운영에 참여하도록 동기 부여</span>
+                <span className="text-sm leading-relaxed">다른 회원도 운영에 참여하도록 동기 부여<br />누구나 게임 운영 총괄자 가능</span>
               </div>
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>

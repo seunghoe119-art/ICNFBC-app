@@ -8,7 +8,7 @@ export default function Finance() {
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-black text-black mb-6">Open Finance</h2>
           <p className="text-xl text-gray-600 font-light max-w-3xl mx-auto">
-            회원들을 위해 월간 수입, 지출, 잔액을 공개합니다.
+            회원들을 위해 월간 수입, 지출, 잔액을 공개합니다.<br />(회원기능 추가하여 회원만 확인 가능하게 기능 및 업로드 예정 )
           </p>
         </div>
 
