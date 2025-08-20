@@ -1,17 +1,17 @@
 const scheduleItems = [
   {
-    title: "수요일 연습",
-    time: "8:00 PM",
+    title: "매주 금요일 대관",
+    time: "21:00 PM",
     location: "체육관 A",
   },
   {
     title: "토요일 스크리미지",
-    time: "5:00 PM",
+    time: ":00 PM",
     location: "코트 B - 친선 경기",
   },
   {
     title: "금요일 훈련",
-    time: "7:30 PM",
+    time: ":0 PM",
     location: "전술 개발",
   },
 ];
@@ -23,11 +23,11 @@ export default function Schedule() {
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div>
             <h2 className="text-5xl md:text-6xl font-black mb-8">
-              Practice &<br/>
-              <span className="text-accent">Games</span>
+              GAME &<br/>
+              <span className="text-accent">HOME GYM</span>
             </h2>
             <p className="text-xl text-gray-400 font-light mb-12">
-              주간 연습과 친선 경기 일정입니다. 최신 날짜를 확인하세요.
+              삼성리틀썬더스농구교실 김포점<br/>경기 김포시 감정로 86 2층<br/>경기 김포시 감정동 626-10
             </p>
             
             {/* Court Images */}
