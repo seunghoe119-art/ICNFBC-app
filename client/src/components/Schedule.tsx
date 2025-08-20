@@ -2,7 +2,7 @@ const scheduleItems = [
   {
     title: "매주 금요일 대관",
     time: "21:00 PM",
-    location: "체육관 A",
+    location: "정규 대관 체육관",
   },
   {
     title: "토요일 스크리미지",
