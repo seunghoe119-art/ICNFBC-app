@@ -1,0 +1,114 @@
+AGENT PROMPT — Make duplicate check non‑blocking on Admin New Post
+
+Context
+- App: Replit Vite + React + TypeScript (+ wouter, @tanstack/react-query, Supabase-js)
+- File to edit: client/src/pages/AdminNewPostPage.tsx (and utils if needed)
+- Table: "youtube posts" (note the space). Columns: id, title, description, youtube_id, youtube_url, created_at
+
+Problem
+- On the Admin “Create New Post” page the URL field triggers a duplicate check that can get stuck on “Checking for duplicates…” and blocks submission. We want authors to be able to post even if the background duplicate check is still running (with a final check at submit for safety).
+
+Goal
+- Make the duplicate check **non‑blocking** and resilient:
+  - Background duplicate query runs on URL blur / change, but never disables the “Create Post” button.
+  - The submit button is only disabled while *actually saving* (creating) or when required fields are empty/invalid.
+  - If a duplicate is found, show a clear warning (e.g., red badge or callout) and optionally a Confirm dialog at submit time, but allow override if the admin insists.
+  - Always do one last duplicate check just before inserting; if a true duplicate exists, prompt the admin to confirm (Cancel / Post anyway).
+
+Required changes
+1) AdminNewPostPage.tsx
+   - States (or equivalent)
+     ```ts
+     const [title, setTitle] = useState('');
+     const [url, setUrl] = useState('');
+     const [description, setDescription] = useState('');
+     const [isSaving, setIsSaving] = useState(false);
+     const [dupeStatus, setDupeStatus] = useState<'idle'|'checking'|'found'|'none'>('idle');
+     const [dupeCount, setDupeCount] = useState(0);
+     ```
+   - On URL input `onBlur` (or debounced `onChange`), trigger `checkDuplicate(url)`:
+     ```ts
+     async function checkDuplicate(rawUrl: string) {
+       const { youtubeId } = parseYouTubeUrl(normalizeYouTubeUrl(rawUrl)); // keep existing utils if present
+       if (!youtubeId) { setDupeStatus('idle'); setDupeCount(0); return; }
+       setDupeStatus('checking');
+       const { data, error } = await supabase
+         .from('youtube posts')
+         .select('id', { count: 'exact', head: true })
+         .eq('youtube_id', youtubeId);
+       if (error) { console.warn('dupe check error', error); setDupeStatus('idle'); return; }
+       const count = data?.length ?? 0; // when head:true, length is 0; use count from headers if available
+       const cnt = (count === 0 && (error as any)?.count) ? (error as any).count : count;
+       // Better: use PostgREST 'count' in the response (supabase-js exposes it as 'count' on select when not head)
+       // If using normal select:
+       // const { data, count } = await supabase.from('youtube posts').select('id', { count: 'exact' }).eq('youtube_id', youtubeId);
+       const isDupe = (typeof (count as any) === 'number' ? count : 0) > 0;
+       setDupeStatus(isDupe ? 'found' : 'none');
+       setDupeCount(typeof (count as any) === 'number' ? (count as number) : 0);
+     }
+     ```
+   - Important: **Do not** disable “Create Post” because of `dupeStatus==='checking'`. Only disable when `isSaving===true` or when required fields invalid.
+   - Show a small inline UI under the URL field:
+     - `checking` → small spinner + “Checking for duplicates…”
+     - `found` → red text “This video already exists (N). You can still post if you really want.”
+     - `none` → subtle green “No duplicates found.”
+   - On submit (`handleCreate`):
+     ```ts
+     async function handleCreate(e: FormEvent) {
+       e.preventDefault();
+       if (!title.trim() || !url.trim()) return; // required
+
+       setIsSaving(true);
+       try {
+         const normalized = normalizeYouTubeUrl(url.trim());
+         const { youtubeId } = parseYouTubeUrl(normalized);
+         if (!youtubeId) throw new Error('Invalid YouTube URL');
+
+         // Final duplicate check (non-blocking check result is ignored; we re-check here)
+         const { data: dupeData, count: finalCount, error: dupeErr } = await supabase
+           .from('youtube posts')
+           .select('id', { count: 'exact' })
+           .eq('youtube_id', youtubeId);
+         if (dupeErr) console.warn('final dupe check error', dupeErr);
+         const hasDupe = (finalCount ?? dupeData?.length ?? 0) > 0;
+         if (hasDupe) {
+           const proceed = window.confirm('A post with this YouTube video already exists. Post anyway?');
+           if (!proceed) { setIsSaving(false); return; }
+         }
+
+         const payload = {
+           title: title.trim(),
+           description: description.trim().slice(0, 200),
+           youtube_id: youtubeId,
+           youtube_url: normalized,
+         };
+
+         const { error: insertErr } = await supabase.from('youtube posts').insert(payload);
+         if (insertErr) throw insertErr;
+
+         // Success → toast + navigate back to board/home or clear form
+         // (Use existing toast/navigation utilities in the project)
+       } catch (err) {
+         console.error('Create post failed', err);
+         // show toast error
+       } finally {
+         setIsSaving(false);
+       }
+     }
+     ```
+   - Keep the existing thumbnail preview and normalization/parsing helpers. Do not change styling; only adjust the UX around duplicate checking + submit.
+
+2) Utils (only if needed)
+   - Reuse existing helpers (normalizeYouTubeUrl / parseYouTubeUrl). If missing, keep previous logic intact.
+
+Acceptance
+- Typing a valid YouTube URL immediately shows a thumbnail as before.
+- The duplicate check runs in the background; “Create Post” stays enabled (unless saving).
+- If a duplicate exists, a warning appears but the user can still click Create. On submit a Confirm dialog is shown.
+- The final server-side check still protects against accidental dupes.
+- Insert succeeds for unique URLs; UI never stays stuck on “Checking for duplicates…”.
+
+Do not change
+- Table name “youtube posts” (with the space)
+- Layout/visual design of the form (keep look & feel)
+- Any RLS policies or server keys

@@ -88,7 +88,6 @@ export default function BoardPage() {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['/api/youtube-posts-board', debouncedQuery],
     queryFn: () => fetchPage(debouncedQuery),
-    keepPreviousData: true,
     staleTime: 15_000,
     refetchOnWindowFocus: false,
   });

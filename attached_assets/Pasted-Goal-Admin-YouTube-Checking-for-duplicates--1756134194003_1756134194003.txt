@@ -1,0 +1,113 @@
+Goal
+Admin 새 글 작성 화면에서 YouTube 중복 확인이 “Checking for duplicates…” 에 머물러도 글 작성이 항상 가능해야 한다. 중복 확인은 비차단(non-blocking) 표시만 하고, Create Post 버튼은 제목/유튜브ID가 유효할 때 항상 활성화되도록 고친다.
+
+Files to edit
+
+client/src/pages/AdminNewPostPage.tsx
+
+(필요하면 동일 로직을 client/src/pages/AdminEditPostPage.tsx에도 반영)
+
+Do NOT change
+
+디자인/레이아웃(버튼/입력 UI 그대로 유지)
+
+테이블명: 'youtube posts' (공백 포함)
+
+YouTube 파서/정규화 유틸은 기존 src/lib/youtube.ts의 parseYouTubeUrl, normalizeYouTubeUrl 사용
+
+Changes
+
+중복 확인을 비차단으로 전환
+
+상태 추가/정리:
+
+const [dupeStatus, setDupeStatus] = useState<'idle'|'checking'|'checked'>('idle');
+const [dupeCount, setDupeCount] = useState(0);
+
+
+URL 입력에서 onBlur(또는 디바운스된 onChange)로 중복 확인만 트리거:
+
+async function checkDuplicate(rawUrl: string) {
+  const { youtubeId } = parseYouTubeUrl(normalizeYouTubeUrl(rawUrl));
+  if (!youtubeId) { setDupeStatus('idle'); setDupeCount(0); return; }
+
+  setDupeStatus('checking');
+
+  const { count, error } = await supabase
+    .from('youtube posts')
+    .select('id', { count: 'exact', head: true })
+    .eq('youtube_id', youtubeId);
+
+  if (error) { console.error('dup check error', error); setDupeStatus('idle'); return; }
+
+  setDupeCount(count ?? 0);
+  setDupeStatus('checked');
+}
+
+
+중복이어도 버튼을 비활성화하지 말 것. 단지 입력 아래에 작은 배지/문구로:
+
+dupeStatus === 'checking' → “Checking for duplicates…”
+
+dupeStatus === 'checked' && dupeCount > 0 → “이미 등록된 영상입니다.”(경고색)
+
+dupeStatus === 'checked' && dupeCount === 0 → “중복 없음”(중립)
+
+Create 버튼 활성화 규칙
+
+Create Post는 제목이 비어있지 않고, URL에서 유효한 youtubeId가 파싱될 때만 활성화.
+
+중복 여부와 무관하게 활성화(비차단).
+
+disabled 조건 예:
+
+const { youtubeId } = parseYouTubeUrl(normalizeYouTubeUrl(url));
+const disableCreate = !title.trim() || !youtubeId || submitting;
+
+
+Submit 로직(항상 진행)
+
+제출 시, 다시 한 번 youtubeId 파싱 → 값 없으면 토스트로 오류 후 return.
+
+DB Insert:
+
+const payload = {
+  title: title.trim(),
+  description: desc.trim().slice(0, 200) || null,
+  youtube_id: youtubeId,
+  youtube_url: normalizeYouTubeUrl(url),
+};
+
+const { error } = await supabase
+  .from('youtube posts')
+  .insert([payload])
+  .select();
+
+
+네트워크/DB 에러는 토스트로 알리고, 버튼 비활성화 해제.
+
+중복이어도 DB에는 삽입 시도(현재 유니크 제약 없음). 중복 방지를 원하면 나중에 DB 제약으로 다룬다. 여기서는 비차단이 목적.
+
+UI 텍스트
+
+기존 스타일 유지. URL 입력 아래 작은 텍스트/배지로 상태만 보여주고, 버튼은 막지 않음.
+
+“Checking for duplicates…” 가 무한 고정되지 않도록 setDupeStatus('checked')로 전환하는 코드 반드시 포함.
+
+깨끗한 코드
+
+설명용 문장(요구사항 텍스트)은 코드에 주석이 아닌 텍스트로 넣지 말 것.
+
+함수/상태/핸들러만 추가·수정.
+
+Acceptance
+
+URL 입력 후 중복 확인이 “Checking for duplicates…”로 떠도 Create Post 버튼은 정상 활성화(제목/유튜브ID 유효 시).
+
+중복일 때도 제출은 가능하며, UI에는 “이미 등록된 영상입니다.” 경고만 표시.
+
+제출 실패 시 토스트로 에러를 보여주고 다시 시도 가능.
+
+기존 화면/스타일 변화 없음.
+
+youtube posts 테이블로 정상 insert.

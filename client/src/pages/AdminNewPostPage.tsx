@@ -121,23 +121,6 @@ export default function AdminNewPostPage() {
     }
 
     try {
-      // Final duplicate check before insert
-      const { data: existingData, error: checkError } = await supabase
-        .from('youtube posts')
-        .select('youtube_id')
-        .eq('youtube_id', youtubeId)
-        .limit(1);
-      
-      if (checkError) {
-        throw checkError;
-      }
-      
-      if (existingData && existingData.length > 0) {
-        setErrors({ duplicate: 'This video is already posted.' });
-        setLoading(false);
-        return;
-      }
-      
       const { error } = await supabase
         .from('youtube posts')
         .insert({
@@ -305,7 +288,7 @@ export default function AdminNewPostPage() {
               <div className="flex gap-4">
                 <Button
                   type="submit"
-                  disabled={loading || !title.trim() || !youtubeUrl.trim() || !youtubeId || errors.duplicate || duplicateCheck || description.length > maxDescriptionLength}
+                  disabled={loading || !title.trim() || !youtubeUrl.trim() || !youtubeId || description.length > maxDescriptionLength}
                   data-testid="button-submit"
                 >
                   {loading ? 'Creating...' : 'Create Post'}
