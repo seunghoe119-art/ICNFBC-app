@@ -294,7 +294,7 @@ export default function AdminNewPostPage() {
                   placeholder="Short description of the video..."
                   disabled={loading}
                   rows={3}
-                  maxLength={maxDescriptionLength + 50} // Allow some buffer for user experience
+                  // maxLength={maxDescriptionLength + 50} // Allow some buffer for user experience
                   data-testid="textarea-description"
                 />
                 {errors.description && (
