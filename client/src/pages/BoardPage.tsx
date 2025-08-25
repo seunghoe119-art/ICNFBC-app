@@ -1,7 +1,6 @@
 import { Play, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
-import { Link } from "wouter";
 
 interface YoutubePost {
   id: number;
@@ -12,23 +11,21 @@ interface YoutubePost {
   created_at: string;
 }
 
-export default function Highlights() {
+export default function BoardPage() {
   const { data: posts, isLoading, error } = useQuery({
-    queryKey: ['/api/youtube-posts'],
+    queryKey: ['/api/youtube-posts-all'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('youtube posts')
         .select('id, title, description, youtube_id, youtube_url, created_at')
-        .order('created_at', { ascending: false, nullsFirst: false })
-        .limit(4);
+        .order('created_at', { ascending: false, nullsFirst: false });
       
       if (error) {
         // Fallback to ordering by id if created_at fails
         const { data: fallbackData, error: fallbackError } = await supabase
           .from('youtube posts')
           .select('id, title, description, youtube_id, youtube_url, created_at')
-          .order('id', { ascending: false })
-          .limit(4);
+          .order('id', { ascending: false });
         
         if (fallbackError) throw fallbackError;
         return fallbackData as YoutubePost[];
@@ -74,18 +71,6 @@ export default function Highlights() {
     </div>
   );
 
-  const renderEmptyCard = () => (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
-      <div className="aspect-video bg-gray-200 flex items-center justify-center">
-        <Play className="w-16 h-16 text-gray-400" fill="currentColor" />
-      </div>
-      <div className="p-6">
-        <h3 className="font-bold text-lg mb-2">No videos yet</h3>
-        <p className="text-gray-600 text-sm">New videos coming soon.</p>
-      </div>
-    </div>
-  );
-
   const renderSkeletonCard = () => (
     <div className="bg-white rounded-2xl overflow-hidden shadow-lg animate-pulse">
       <div className="aspect-video bg-gray-200"></div>
@@ -97,25 +82,25 @@ export default function Highlights() {
   );
 
   return (
-    <section className="py-32 bg-gray-50 relative z-10">
+    <div className="min-h-screen bg-gray-50 py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-black text-black mb-6">Last Week on the Court</h2>
+          <h1 className="text-5xl md:text-6xl font-black text-black mb-6">Video Board</h1>
           <p className="text-xl text-gray-600 font-light max-w-3xl mx-auto">
-            지난 주 코트 위 순간들
+            모든 영상을 한눈에
           </p>
         </div>
 
         {error && (
           <div className="text-center mb-8">
-            <p className="text-red-600 text-sm">Failed to load videos.</p>
+            <p className="text-red-600">Failed to load videos.</p>
           </div>
         )}
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {isLoading ? (
-            // Loading state - show 4 skeleton cards
-            Array.from({ length: 4 }).map((_, index) => (
+            // Loading state
+            Array.from({ length: 12 }).map((_, index) => (
               <div key={`skeleton-${index}`}>
                 {renderSkeletonCard()}
               </div>
@@ -124,20 +109,17 @@ export default function Highlights() {
             // Show actual data
             posts.map(renderVideoCard)
           ) : (
-            // Empty state - show one placeholder card
-            renderEmptyCard()
+            // Empty state
+            <div className="col-span-full text-center py-16">
+              <div className="bg-white rounded-2xl p-12 shadow-lg max-w-md mx-auto">
+                <Play className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" />
+                <h3 className="font-bold text-lg mb-2">No videos yet</h3>
+                <p className="text-gray-600">New videos coming soon.</p>
+              </div>
+            </div>
           )}
         </div>
-
-        <div className="text-center mt-12">
-          <Link 
-            href="/board" 
-            className="text-red-600 hover:text-red-700 font-medium transition-colors"
-          >
-            See more →
-          </Link>
-        </div>
       </div>
-    </section>
+    </div>
   );
 }

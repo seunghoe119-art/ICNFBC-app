@@ -14,6 +14,7 @@ import AboutPage from "@/pages/AboutPage";
 import RulesPage from "@/pages/RulesPage";
 import FinancePage from "@/pages/FinancePage";
 import ContactPage from "@/pages/ContactPage";
+import BoardPage from "@/pages/BoardPage";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -47,6 +48,11 @@ function Router() {
               <Route path="/contact" component={() => (
                 <PageTransition key="/contact">
                   <ContactPage />
+                </PageTransition>
+              )} />
+              <Route path="/board" component={() => (
+                <PageTransition key="/board">
+                  <BoardPage />
                 </PageTransition>
               )} />
               <Route component={() => (

@@ -20,7 +20,7 @@ interface NavigationProviderProps {
 }
 
 // Define menu order for directional animations
-const menuOrder = ["/", "/about", "/rules", "/finance", "/contact"];
+const menuOrder = ["/", "/about", "/rules", "/finance", "/contact", "/board"];
 
 export const NavigationProvider = ({ children }: NavigationProviderProps) => {
   const previousPathRef = useRef("/");
