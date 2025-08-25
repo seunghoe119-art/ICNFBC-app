@@ -4,15 +4,16 @@ import { Menu, X, User, LogOut } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useNavigationDirection } from "@/contexts/NavigationContext";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const { setDirection } = useNavigationDirection();
-  const { user, isAdmin, signOut } = useAuth();
+  const { user, isAdmin } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,6 +47,16 @@ export default function Navigation() {
   const handleNavigation = (targetPath: string) => {
     setDirection(targetPath);
     closeMobileMenu();
+  };
+
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut({ scope: 'global' });
+      // The AuthContext onAuthStateChange should set user/profile to null on SIGNED_OUT
+      setLocation('/login');
+    } catch (e) {
+      console.error('signOut failed', e);
+    }
   };
 
   return (
@@ -120,7 +131,7 @@ export default function Navigation() {
             {user ? (
               <Button 
                 variant="outline" 
-                onClick={() => signOut()}
+                onClick={handleLogout}
                 className="rounded-full flex items-center space-x-2"
                 data-testid="button-logout"
               >
@@ -208,7 +219,7 @@ export default function Navigation() {
                   <Button 
                     variant="outline" 
                     onClick={() => {
-                      signOut();
+                      handleLogout();
                       closeMobileMenu();
                     }}
                     className="w-full flex items-center justify-center space-x-2"
