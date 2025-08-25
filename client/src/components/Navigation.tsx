@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useNavigationDirection } from "@/contexts/NavigationContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,6 +12,7 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [location] = useLocation();
   const { setDirection } = useNavigationDirection();
+  const { user, isAdmin, signOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -103,13 +105,44 @@ export default function Navigation() {
                 Join Us
               </span>
             </Link>
+            {isAdmin && (
+              <Link href="/admin/new-post" onClick={() => handleNavigation("/admin/new-post")}>
+                <span className={`font-medium transition-all duration-200 ease-out hover:text-[#e60000] hover:font-bold hover:scale-105 hover:-translate-y-0.5 hover:drop-shadow-md focus-visible:text-[#e60000] focus-visible:font-bold focus-visible:underline focus-visible:outline-none ${
+                  location === "/admin/new-post" ? "text-[#e60000] font-bold" : "text-gray-600"
+                }`}>
+                  Admin
+                </span>
+              </Link>
+            )}
           </div>
 
-          <Link href="/contact" onClick={() => handleNavigation("/contact")}>
-            <Button className="hidden md:block bg-black text-white hover:bg-gray-800 rounded-full">
-              Get Started
-            </Button>
-          </Link>
+          <div className="hidden md:flex items-center space-x-4">
+            {user ? (
+              <Button 
+                variant="outline" 
+                onClick={() => signOut()}
+                className="rounded-full flex items-center space-x-2"
+                data-testid="button-logout"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Logout</span>
+              </Button>
+            ) : (
+              <>
+                <Link href="/login" onClick={() => handleNavigation("/login")}>
+                  <Button variant="outline" className="rounded-full flex items-center space-x-2">
+                    <User className="w-4 h-4" />
+                    <span>Login</span>
+                  </Button>
+                </Link>
+                <Link href="/contact" onClick={() => handleNavigation("/contact")}>
+                  <Button className="bg-black text-white hover:bg-gray-800 rounded-full">
+                    Get Started
+                  </Button>
+                </Link>
+              </>
+            )}
+          </div>
 
           {/* Mobile menu button */}
           <Button
@@ -161,6 +194,44 @@ export default function Navigation() {
                   Join Us
                 </span>
               </Link>
+              {isAdmin && (
+                <Link href="/admin/new-post" onClick={() => handleNavigation("/admin/new-post")}>
+                  <span className={`block w-full text-left px-3 py-2 font-medium transition-all duration-200 ease-out hover:text-[#e60000] hover:font-bold hover:scale-105 hover:-translate-y-0.5 hover:drop-shadow-md focus-visible:text-[#e60000] focus-visible:font-bold focus-visible:underline focus-visible:outline-none ${
+                    location === "/admin/new-post" ? "text-[#e60000] font-bold" : "text-gray-600"
+                  }`}>
+                    Admin
+                  </span>
+                </Link>
+              )}
+              <div className="px-3 py-2 border-t border-gray-100 mt-2">
+                {user ? (
+                  <Button 
+                    variant="outline" 
+                    onClick={() => {
+                      signOut();
+                      closeMobileMenu();
+                    }}
+                    className="w-full flex items-center justify-center space-x-2"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Logout</span>
+                  </Button>
+                ) : (
+                  <div className="space-y-2">
+                    <Link href="/login" onClick={() => handleNavigation("/login")}>
+                      <Button variant="outline" className="w-full flex items-center justify-center space-x-2">
+                        <User className="w-4 h-4" />
+                        <span>Login</span>
+                      </Button>
+                    </Link>
+                    <Link href="/contact" onClick={() => handleNavigation("/contact")}>
+                      <Button className="w-full bg-black text-white hover:bg-gray-800">
+                        Get Started
+                      </Button>
+                    </Link>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
