@@ -1,0 +1,131 @@
+AGENT PROMPT — Fix BoardPage data flow (React Query + Supabase) — Enhanced
+
+Goal
+-----
+Fix `BoardPage` so the list doesn’t randomly show “No videos yet”. The problem is we call `setState` *inside* the React Query `queryFn`. Refactor so the queryFn **only returns data**, and then update local state in `useEffect`. Keep cursor-based pagination and search.
+
+File to edit
+------------
+client/src/pages/BoardPage.tsx
+
+Requirements
+------------
+1) **Do not** call `setAllPosts` or `setHasMore` inside the React Query `queryFn`.
+2) Add a helper to fetch one page, with search + ordering + fallback:
+
+```ts
+const pageSize = 12;
+
+async function fetchPage(q: string, cursor?: { created_at?: string; id?: number }) {
+  let query = supabase
+    .from('youtube posts')
+    .select('id, title, description, youtube_id, youtube_url, created_at');
+
+  if (q.trim()) {
+    query = query.or(`title.ilike.%${q.trim()}%,description.ilike.%${q.trim()}%`);
+  }
+
+  // default ordering by created_at desc
+  query = query.order('created_at', { ascending: false, nullsFirst: false }).limit(pageSize);
+
+  // cursor pagination (by created_at)
+  if (cursor?.created_at) {
+    query = query.lt('created_at', cursor.created_at);
+  }
+
+  const { data, error } = await query;
+
+  // fallback to id desc if created_at fails
+  if (error) {
+    let fb = supabase
+      .from('youtube posts')
+      .select('id, title, description, youtube_id, youtube_url, created_at');
+    if (q.trim()) {
+      fb = fb.or(`title.ilike.%${q.trim()}%,description.ilike.%${q.trim()}%`);
+    }
+    const { data: fbData, error: fbErr } = await fb.order('id', { ascending: false }).limit(pageSize);
+    if (fbErr) throw fbErr;
+    return (fbData ?? []) as YoutubePost[];
+  }
+
+  return (data ?? []) as YoutubePost[];
+}
+```
+
+3) Update React Query so it **returns** data only:
+```ts
+const { data, isLoading, error, refetch } = useQuery({
+  queryKey: ['/api/youtube-posts-board', debouncedQuery],
+  queryFn: () => fetchPage(debouncedQuery),
+  keepPreviousData: true,
+  // Added stability options
+  staleTime: 15_000,
+  refetchOnWindowFocus: false,
+});
+```
+
+4) Sync query `data` to local state in `useEffect` (no setState in queryFn):
+```ts
+useEffect(() => {
+  if (!data) {
+    setAllPosts([]);
+    setHasMore(true);
+    return;
+  }
+  setAllPosts(data);
+  setHasMore(data.length === pageSize);
+}, [data, debouncedQuery]);
+```
+
+5) Refactor `loadMore` to reuse `fetchPage` with a cursor from the last item:
+```ts
+const loadMore = useCallback(async () => {
+  if (loadingMore || !hasMore || allPosts.length === 0) return;
+
+  setLoadingMore(true);
+  try {
+    const last = allPosts[allPosts.length - 1];
+    const next = await fetchPage(debouncedQuery, { created_at: last.created_at, id: last.id });
+
+    const existing = new Set(allPosts.map(p => p.id));
+    const unique = next.filter(p => !existing.has(p.id));
+
+    setAllPosts(prev => [...prev, ...unique]);
+    setHasMore(next.length === pageSize);
+  } catch (e) {
+    console.error('Error loading more posts:', e);
+  } finally {
+    setLoadingMore(false);
+  }
+}, [allPosts, debouncedQuery, hasMore, loadingMore]);
+```
+
+6) When clearing search, also reset list state:
+```ts
+const clearSearch = () => {
+  setSearchQuery('');
+  setDebouncedQuery('');
+  setAllPosts([]);
+  setHasMore(true);
+};
+```
+
+7) Do **not** change styling, grid layout, or Admin edit buttons. Keep table name exactly `'youtube posts'` (with space). Keep current empty/error/loading UIs as they are.
+
+Notes
+-----
+- If `order('created_at', { nullsFirst: false })` causes an error with your Supabase client version, remove `nullsFirst` and just do:
+  ```ts
+  query = query.order('created_at', { ascending: false }).limit(pageSize);
+  ```
+
+Acceptance
+----------
+- Initial load shows items reliably (no random “No videos yet” when data exists).
+- Search works with debounce; “Clear” resets to page 1.
+- “Load more” appends without duplicates; cursor pagination uses `created_at` with fallback to `id`.
+- No `setState` happens inside `queryFn`.
+
+TL;DR one‑liner
+---------------
+Fix BoardPage so the React Query `queryFn` **returns data only** (no setState). Add a `fetchPage()` helper that supports search, `created_at desc` (fallback to `id desc`), and cursor pagination; then sync the returned data to local state inside `useEffect`. Keep styles/admin buttons/`'youtube posts'` table name unchanged, and reset list state when clearing search.
