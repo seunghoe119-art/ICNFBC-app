@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLocation } from 'wouter';
+import { supabase } from '@/lib/supabaseClient';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -9,7 +10,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export default function LoginPage() {
   const [location, setLocation] = useLocation();
-  const { signIn, signUp, user } = useAuth();
+  const { user } = useAuth();
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,10 +19,11 @@ export default function LoginPage() {
   const [signUpSuccess, setSignUpSuccess] = useState(false);
 
   // Redirect if already logged in
-  if (user) {
-    setLocation('/admin/new-post');
-    return null;
-  }
+  useEffect(() => {
+    if (user) {
+      setLocation('/admin/new-post');
+    }
+  }, [user, setLocation]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +39,10 @@ export default function LoginPage() {
 
     try {
       if (isSignUp) {
-        const { error } = await signUp(email, password);
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+        });
         if (error) {
           setError(error.message);
         } else {
@@ -46,7 +51,10 @@ export default function LoginPage() {
           setPassword('');
         }
       } else {
-        const { error } = await signIn(email, password);
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
         if (error) {
           setError(error.message);
         } else {

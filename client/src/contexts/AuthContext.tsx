@@ -1,21 +1,18 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { User, Session } from '@supabase/supabase-js';
+import { User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabaseClient';
 
 interface Profile {
-  id: string;
   user_id: string;
   role: string;
+  status: string;
 }
 
 interface AuthContextType {
   user: User | null;
   profile: Profile | null;
-  session: Session | null;
   loading: boolean;
   isAdmin: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
-  signUp: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
 }
 
@@ -36,15 +33,13 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const isAdmin = profile?.role === 'admin';
+  const isAdmin = profile?.role === 'admin' && profile?.status === 'approved';
 
   useEffect(() => {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
         fetchProfile(session.user.id);
@@ -57,12 +52,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
+      if (event === 'SIGNED_IN' && session?.user) {
+        setUser(session.user);
         await fetchProfile(session.user.id);
-      } else {
+      } else if (event === 'SIGNED_OUT') {
+        setUser(null);
         setProfile(null);
         setLoading(false);
       }
@@ -75,7 +69,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('id, user_id, role')
+        .select('user_id, role, status')
         .eq('user_id', userId)
         .single();
 
@@ -93,22 +87,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return { error };
-  };
-
-  const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-    return { error };
-  };
-
   const signOut = async () => {
     await supabase.auth.signOut();
   };
@@ -118,11 +96,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       value={{
         user,
         profile,
-        session,
         loading,
         isAdmin,
-        signIn,
-        signUp,
         signOut,
       }}
     >
