@@ -16,6 +16,44 @@ interface YoutubePost {
   created_at: string;
 }
 
+const pageSize = 12;
+
+// Helper to fetch one page with search, ordering, and fallback
+async function fetchPage(q: string, cursor?: { created_at?: string; id?: number }): Promise<YoutubePost[]> {
+  let query = supabase
+    .from('youtube posts')
+    .select('id, title, description, youtube_id, youtube_url, created_at');
+
+  if (q.trim()) {
+    query = query.or(`title.ilike.%${q.trim()}%,description.ilike.%${q.trim()}%`);
+  }
+
+  // default ordering by created_at desc
+  query = query.order('created_at', { ascending: false }).limit(pageSize);
+
+  // cursor pagination (by created_at)
+  if (cursor?.created_at) {
+    query = query.lt('created_at', cursor.created_at);
+  }
+
+  const { data, error } = await query;
+
+  // fallback to id desc if created_at fails
+  if (error) {
+    let fb = supabase
+      .from('youtube posts')
+      .select('id, title, description, youtube_id, youtube_url, created_at');
+    if (q.trim()) {
+      fb = fb.or(`title.ilike.%${q.trim()}%,description.ilike.%${q.trim()}%`);
+    }
+    const { data: fbData, error: fbErr } = await fb.order('id', { ascending: false }).limit(pageSize);
+    if (fbErr) throw fbErr;
+    return (fbData ?? []) as YoutubePost[];
+  }
+
+  return (data ?? []) as YoutubePost[];
+}
+
 export default function BoardPage() {
   const { isAdmin } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
@@ -23,8 +61,6 @@ export default function BoardPage() {
   const [allPosts, setAllPosts] = useState<YoutubePost[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
-  
-  const pageSize = 12;
   
   // Format date for display
   const formatDate = (dateString: string) => {
@@ -49,95 +85,40 @@ export default function BoardPage() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
   
-  const { data: posts, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['/api/youtube-posts-board', debouncedQuery],
-    queryFn: async () => {
-      let query = supabase
-        .from('youtube posts')
-        .select('id, title, description, youtube_id, youtube_url, created_at');
-      
-      // Add search filter if query exists
-      if (debouncedQuery.trim()) {
-        query = query.or(`title.ilike.%${debouncedQuery.trim()}%,description.ilike.%${debouncedQuery.trim()}%`);
-      }
-      
-      // Try ordering by created_at first
-      query = query.order('created_at', { ascending: false, nullsFirst: false }).limit(pageSize);
-      
-      const { data, error } = await query;
-      
-      if (error) {
-        // Fallback to ordering by id if created_at fails
-        let fallbackQuery = supabase
-          .from('youtube posts')
-          .select('id, title, description, youtube_id, youtube_url, created_at');
-        
-        if (debouncedQuery.trim()) {
-          fallbackQuery = fallbackQuery.or(`title.ilike.%${debouncedQuery.trim()}%,description.ilike.%${debouncedQuery.trim()}%`);
-        }
-        
-        const { data: fallbackData, error: fallbackError } = await fallbackQuery
-          .order('id', { ascending: false })
-          .limit(pageSize);
-        
-        if (fallbackError) throw fallbackError;
-        
-        const result = fallbackData as YoutubePost[];
-        setAllPosts(result);
-        setHasMore(result.length === pageSize);
-        return result;
-      }
-      
-      const result = data as YoutubePost[];
-      setAllPosts(result);
-      setHasMore(result.length === pageSize);
-      return result;
-    }
+    queryFn: () => fetchPage(debouncedQuery),
+    keepPreviousData: true,
+    staleTime: 15_000,
+    refetchOnWindowFocus: false,
   });
   
+  // Sync query data to local state
+  useEffect(() => {
+    if (!data) {
+      setAllPosts([]);
+      setHasMore(true);
+      return;
+    }
+    setAllPosts(data);
+    setHasMore(data.length === pageSize);
+  }, [data, debouncedQuery]);
+  
   const loadMore = useCallback(async () => {
-    if (loadingMore || !hasMore) return;
-    
+    if (loadingMore || !hasMore || allPosts.length === 0) return;
+
     setLoadingMore(true);
     try {
-      const lastPost = allPosts[allPosts.length - 1];
-      let query = supabase
-        .from('youtube posts')
-        .select('id, title, description, youtube_id, youtube_url, created_at');
-      
-      // Add search filter if query exists
-      if (debouncedQuery.trim()) {
-        query = query.or(`title.ilike.%${debouncedQuery.trim()}%,description.ilike.%${debouncedQuery.trim()}%`);
-      }
-      
-      // Pagination: get items after the last loaded item
-      if (lastPost.created_at) {
-        query = query
-          .lt('created_at', lastPost.created_at)
-          .order('created_at', { ascending: false, nullsFirst: false })
-          .limit(pageSize);
-      } else {
-        // Fallback to id-based pagination
-        query = query
-          .lt('id', lastPost.id)
-          .order('id', { ascending: false })
-          .limit(pageSize);
-      }
-      
-      const { data, error } = await query;
-      
-      if (error) throw error;
-      
-      const newPosts = data as YoutubePost[];
-      
-      // Filter out any duplicates (by id)
-      const existingIds = new Set(allPosts.map(p => p.id));
-      const uniqueNewPosts = newPosts.filter(p => !existingIds.has(p.id));
-      
-      setAllPosts(prev => [...prev, ...uniqueNewPosts]);
-      setHasMore(newPosts.length === pageSize);
-    } catch (error) {
-      console.error('Error loading more posts:', error);
+      const last = allPosts[allPosts.length - 1];
+      const next = await fetchPage(debouncedQuery, { created_at: last.created_at, id: last.id });
+
+      const existing = new Set(allPosts.map(p => p.id));
+      const unique = next.filter(p => !existing.has(p.id));
+
+      setAllPosts(prev => [...prev, ...unique]);
+      setHasMore(next.length === pageSize);
+    } catch (e) {
+      console.error('Error loading more posts:', e);
     } finally {
       setLoadingMore(false);
     }
@@ -146,6 +127,8 @@ export default function BoardPage() {
   const clearSearch = () => {
     setSearchQuery('');
     setDebouncedQuery('');
+    setAllPosts([]);
+    setHasMore(true);
   };
   
   // Reset to first page when search changes
