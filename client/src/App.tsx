@@ -18,6 +18,7 @@ import ContactPage from "@/pages/ContactPage";
 import BoardPage from "@/pages/BoardPage";
 import LoginPage from "@/pages/LoginPage";
 import AdminNewPostPage from "@/pages/AdminNewPostPage";
+import AdminEditPostPage from "@/pages/AdminEditPostPage";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -67,6 +68,11 @@ function Router() {
                 <Route path="/admin/new-post" component={() => (
                   <PageTransition key="/admin/new-post">
                     <AdminNewPostPage />
+                  </PageTransition>
+                )} />
+                <Route path="/admin/edit/:id" component={() => (
+                  <PageTransition key="/admin/edit">
+                    <AdminEditPostPage />
                   </PageTransition>
                 )} />
                 <Route component={() => (

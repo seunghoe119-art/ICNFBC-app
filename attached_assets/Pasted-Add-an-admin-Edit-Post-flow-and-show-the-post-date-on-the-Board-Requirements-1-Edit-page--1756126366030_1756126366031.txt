@@ -1,0 +1,43 @@
+Add an admin “Edit Post” flow and show the post date on the Board.
+
+Requirements
+
+1) Edit page
+- Route: /admin/edit/:id
+- Create a page similar to AdminNewPostPage with fields:
+  - Title (required)
+  - YouTube URL (required)
+  - Description (optional, ~200 chars with live counter)
+- Pre-fill values by fetching the row from table "youtube posts" by id.
+- Reuse normalizeYouTubeUrl() and youtubeId parsing.
+- Duplicate check: before saving, verify that no other row (id != current id) has the same youtube_id.
+  - If duplicate, show: “This video is already posted.”
+- Validation: trim inputs; require valid video id; block when description > 200; disable Save while checking/saving.
+- Buttons: “Save Changes” (updates the row) and “Cancel” (navigates back to /board).
+- After successful save, show a success toast and navigate to /board (or stay and show “Saved”).
+
+2) Link to Edit
+- On the Board cards, if the user is admin, show a small “Edit” control (button or icon) that links to /admin/edit/{id}.
+- Keep the current card layout; do not affect non-admin users.
+
+3) Show posted date on Board
+- On each Board card, display the post date from created_at in a small, muted text line (e.g., “Posted on 2025-08-25” or locale format).
+- If created_at is missing, skip the date line.
+- Maintain CLS stability; do not change card image aspect ratio.
+
+4) Keep existing design
+- Don’t change global styling; match the look & feel of the New Post form.
+- Keep loading/empty/error states intact.
+- Use the shared Supabase client from src/lib/supabaseClient.ts.
+- Do not use service keys.
+
+5) RLS note
+- This project already has UPDATE policy for admins; use it.
+- If UPDATE fails due to policy, confirm the policy checks profiles.role='admin' using auth.uid().
+
+Acceptance
+- Admins can click “Edit” on a card, land on /admin/edit/:id, update fields, and save successfully.
+- Duplicate videos are blocked with a friendly message.
+- The Board shows a posted date line under each card’s content.
+- Non-admins never see Edit controls.
+- No layout shifts, and thumbnails keep 16:9 with lazy loading.

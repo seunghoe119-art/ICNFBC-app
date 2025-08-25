@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import { Play, ExternalLink, Search, X } from "lucide-react";
+import { Play, ExternalLink, Search, X, Edit } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
+import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "wouter";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -15,6 +17,7 @@ interface YoutubePost {
 }
 
 export default function BoardPage() {
+  const { isAdmin } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [allPosts, setAllPosts] = useState<YoutubePost[]>([]);
@@ -22,6 +25,20 @@ export default function BoardPage() {
   const [loadingMore, setLoadingMore] = useState(false);
   
   const pageSize = 12;
+  
+  // Format date for display
+  const formatDate = (dateString: string) => {
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    } catch {
+      return null;
+    }
+  };
   
   // Debounce search query
   useEffect(() => {
@@ -138,33 +155,53 @@ export default function BoardPage() {
 
   const renderVideoCard = (post: YoutubePost) => (
     <div key={post.id} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-      <a
-        href={post.youtube_url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block aspect-video bg-gray-900 relative group cursor-pointer"
-      >
-        <img 
-          src={`https://img.youtube.com/vi/${post.youtube_id}/hqdefault.jpg`}
-          alt={post.title}
-          className="w-full h-full object-cover"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center group-hover:bg-opacity-50 transition-colors">
-          <div className="bg-red-600 rounded-full p-4 group-hover:scale-110 transition-transform">
-            <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
+      <div className="relative">
+        <a
+          href={post.youtube_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block aspect-video bg-gray-900 relative group cursor-pointer"
+        >
+          <img 
+            src={`https://img.youtube.com/vi/${post.youtube_id}/hqdefault.jpg`}
+            alt={post.title}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center group-hover:bg-opacity-50 transition-colors">
+            <div className="bg-red-600 rounded-full p-4 group-hover:scale-110 transition-transform">
+              <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
+            </div>
           </div>
-        </div>
-        <div className="absolute top-4 right-4">
-          <ExternalLink className="w-5 h-5 text-white opacity-80" />
-        </div>
-      </a>
+          <div className="absolute top-4 right-4">
+            <ExternalLink className="w-5 h-5 text-white opacity-80" />
+          </div>
+        </a>
+        {isAdmin && (
+          <Link href={`/admin/edit/${post.id}`}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="absolute top-2 left-2 bg-white/90 hover:bg-white border-gray-200 shadow-sm"
+              data-testid={`button-edit-${post.id}`}
+            >
+              <Edit className="w-3 h-3 mr-1" />
+              Edit
+            </Button>
+          </Link>
+        )}
+      </div>
       <div className="p-6">
         <h3 className="font-bold text-lg mb-2">{post.title}</h3>
-        <p className="text-gray-600 text-sm">
+        <p className="text-gray-600 text-sm mb-3">
           {post.description || "New video coming soon."}
         </p>
-        <div className="mt-2 flex items-center text-red-600 text-sm font-medium">
+        {post.created_at && (
+          <p className="text-gray-400 text-xs mb-2">
+            Posted on {formatDate(post.created_at)}
+          </p>
+        )}
+        <div className="flex items-center text-red-600 text-sm font-medium">
           <Play className="w-4 h-4 mr-1" fill="currentColor" />
           YouTube에서 보기
         </div>
