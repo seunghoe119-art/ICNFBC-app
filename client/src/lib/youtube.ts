@@ -44,3 +44,19 @@ export function isValidYouTubeUrl(url: string): boolean {
 export function getYouTubeThumbnail(videoId: string): string {
   return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 }
+
+/**
+ * Normalize YouTube URL to canonical format
+ */
+export function normalizeYouTubeUrl(url: string): string {
+  if (!url) return '';
+  
+  // Trim whitespace
+  url = url.trim();
+  
+  const videoId = extractYouTubeId(url);
+  if (!videoId) return url; // Return original if can't extract ID
+  
+  // Return canonical YouTube URL
+  return `https://www.youtube.com/watch?v=${videoId}`;
+}

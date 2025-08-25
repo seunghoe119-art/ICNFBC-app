@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLocation } from 'wouter';
 import { supabase } from '@/lib/supabaseClient';
-import { extractYouTubeId, isValidYouTubeUrl, getYouTubeThumbnail } from '@/lib/youtube';
+import { extractYouTubeId, isValidYouTubeUrl, getYouTubeThumbnail, normalizeYouTubeUrl } from '@/lib/youtube';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -22,6 +22,9 @@ export default function AdminNewPostPage() {
   const [youtubeId, setYoutubeId] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [duplicateCheck, setDuplicateCheck] = useState(false);
+  
+  const maxDescriptionLength = 200;
 
   // Handle access control
   useEffect(() => {
@@ -40,16 +43,47 @@ export default function AdminNewPostPage() {
   // Handle YouTube URL changes
   const handleYoutubeUrlChange = (url: string) => {
     setYoutubeUrl(url);
-    setErrors({ ...errors, youtubeUrl: '' });
+    setErrors({ ...errors, youtubeUrl: '', duplicate: '' });
     
-    const videoId = extractYouTubeId(url);
+    const videoId = extractYouTubeId(url.trim());
     setYoutubeId(videoId || '');
   };
 
-  // Auto-extract on blur
-  const handleYoutubeUrlBlur = () => {
-    if (youtubeUrl && !isValidYouTubeUrl(youtubeUrl)) {
+  // Auto-extract and normalize on blur
+  const handleYoutubeUrlBlur = async () => {
+    const trimmedUrl = youtubeUrl.trim();
+    if (!trimmedUrl) return;
+    
+    if (!isValidYouTubeUrl(trimmedUrl)) {
       setErrors({ ...errors, youtubeUrl: 'Invalid YouTube link' });
+      return;
+    }
+    
+    // Normalize URL
+    const normalizedUrl = normalizeYouTubeUrl(trimmedUrl);
+    setYoutubeUrl(normalizedUrl);
+    
+    const videoId = extractYouTubeId(normalizedUrl);
+    if (videoId) {
+      // Check for duplicates
+      setDuplicateCheck(true);
+      try {
+        const { data, error } = await supabase
+          .from('youtube posts')
+          .select('youtube_id')
+          .eq('youtube_id', videoId)
+          .limit(1);
+        
+        if (error) {
+          console.error('Error checking duplicates:', error);
+        } else if (data && data.length > 0) {
+          setErrors({ ...errors, duplicate: 'This video is already posted.' });
+        }
+      } catch (error) {
+        console.error('Error checking duplicates:', error);
+      } finally {
+        setDuplicateCheck(false);
+      }
     }
   };
 
@@ -62,14 +96,22 @@ export default function AdminNewPostPage() {
     // Validation
     const newErrors: Record<string, string> = {};
     
-    if (!title.trim()) {
+    const trimmedTitle = title.trim();
+    const trimmedUrl = youtubeUrl.trim();
+    const trimmedDescription = description.trim();
+    
+    if (!trimmedTitle) {
       newErrors.title = 'Title is required';
     }
     
-    if (!youtubeUrl.trim()) {
+    if (!trimmedUrl) {
       newErrors.youtubeUrl = 'YouTube URL is required';
-    } else if (!isValidYouTubeUrl(youtubeUrl)) {
+    } else if (!isValidYouTubeUrl(trimmedUrl)) {
       newErrors.youtubeUrl = 'Invalid YouTube link';
+    }
+    
+    if (trimmedDescription.length > maxDescriptionLength) {
+      newErrors.description = `Description must be ${maxDescriptionLength} characters or less`;
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -79,12 +121,29 @@ export default function AdminNewPostPage() {
     }
 
     try {
+      // Final duplicate check before insert
+      const { data: existingData, error: checkError } = await supabase
+        .from('youtube posts')
+        .select('youtube_id')
+        .eq('youtube_id', youtubeId)
+        .limit(1);
+      
+      if (checkError) {
+        throw checkError;
+      }
+      
+      if (existingData && existingData.length > 0) {
+        setErrors({ duplicate: 'This video is already posted.' });
+        setLoading(false);
+        return;
+      }
+      
       const { error } = await supabase
         .from('youtube posts')
         .insert({
-          title: title.trim(),
-          description: description.trim() || null,
-          youtube_url: youtubeUrl.trim(),
+          title: trimmedTitle,
+          description: trimmedDescription || null,
+          youtube_url: normalizeYouTubeUrl(trimmedUrl),
           youtube_id: youtubeId,
         });
 
@@ -189,6 +248,12 @@ export default function AdminNewPostPage() {
                 {errors.youtubeUrl && (
                   <p className="text-red-600 text-sm mt-1">{errors.youtubeUrl}</p>
                 )}
+                {duplicateCheck && (
+                  <p className="text-blue-600 text-sm mt-1">Checking for duplicates...</p>
+                )}
+                {errors.duplicate && (
+                  <p className="text-orange-600 text-sm mt-1">{errors.duplicate}</p>
+                )}
               </div>
 
               {youtubeId && (
@@ -207,22 +272,40 @@ export default function AdminNewPostPage() {
               )}
 
               <div>
-                <Label htmlFor="description">Description (optional)</Label>
+                <div className="flex justify-between items-center">
+                  <Label htmlFor="description">Description (optional)</Label>
+                  <span className={`text-sm ${
+                    description.length > maxDescriptionLength 
+                      ? 'text-red-600' 
+                      : description.length > maxDescriptionLength * 0.8 
+                        ? 'text-orange-600' 
+                        : 'text-gray-500'
+                  }`}>
+                    {description.length}/{maxDescriptionLength}
+                  </span>
+                </div>
                 <Textarea
                   id="description"
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                    setErrors({ ...errors, description: '' });
+                  }}
                   placeholder="Short description of the video..."
                   disabled={loading}
                   rows={3}
+                  maxLength={maxDescriptionLength + 50} // Allow some buffer for user experience
                   data-testid="textarea-description"
                 />
+                {errors.description && (
+                  <p className="text-red-600 text-sm mt-1">{errors.description}</p>
+                )}
               </div>
 
               <div className="flex gap-4">
                 <Button
                   type="submit"
-                  disabled={loading || !title.trim() || !youtubeUrl.trim() || !youtubeId}
+                  disabled={loading || !title.trim() || !youtubeUrl.trim() || !youtubeId || errors.duplicate || duplicateCheck || description.length > maxDescriptionLength}
                   data-testid="button-submit"
                 >
                   {loading ? 'Creating...' : 'Create Post'}
