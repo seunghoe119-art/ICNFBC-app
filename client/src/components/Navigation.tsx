@@ -67,7 +67,7 @@ export default function Navigation() {
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text'
                   }}
-                  onClick={() => handleNavigation("/admin/new")}
+                  onClick={() => handleNavigation("/admin/new-post")}
                 >
                   FIRE
                 </span>
