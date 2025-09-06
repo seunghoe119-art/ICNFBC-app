@@ -124,8 +124,12 @@ export default function Highlights() {
             // Show actual data
             posts.map(renderVideoCard)
           ) : (
-            // Empty state - show one placeholder card
-            renderEmptyCard()
+            // Empty state - show 4 placeholder cards
+            Array.from({ length: 4 }).map((_, index) => (
+              <div key={`empty-${index}`}>
+                {renderEmptyCard()}
+              </div>
+            ))
           )}
         </div>
 

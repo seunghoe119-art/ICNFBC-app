@@ -1,8 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { Play, ExternalLink, Search, X, Edit } from "lucide-react";
+import { Play, ExternalLink, Search, X } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabaseClient";
-import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "wouter";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -55,7 +54,6 @@ async function fetchPage(q: string, cursor?: { created_at?: string; id?: number 
 }
 
 export default function BoardPage() {
-  const { isAdmin } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [allPosts, setAllPosts] = useState<YoutubePost[]>([]);
@@ -159,19 +157,6 @@ export default function BoardPage() {
             <ExternalLink className="w-5 h-5 text-white opacity-80" />
           </div>
         </a>
-        {isAdmin && (
-          <Link href={`/admin/edit/${post.id}`}>
-            <Button
-              variant="outline"
-              size="sm"
-              className="absolute top-2 left-2 bg-white/90 hover:bg-white border-gray-200 shadow-sm"
-              data-testid={`button-edit-${post.id}`}
-            >
-              <Edit className="w-3 h-3 mr-1" />
-              Edit
-            </Button>
-          </Link>
-        )}
       </div>
       <div className="p-6">
         <h3 className="font-bold text-lg mb-2">{post.title}</h3>
