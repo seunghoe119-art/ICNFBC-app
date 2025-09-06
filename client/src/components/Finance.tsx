@@ -44,25 +44,25 @@ export default function Finance() {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <div className="flex justify-between py-2">
-                  <span className="text-gray-700">체육관 대여료 (주간)</span>
-                  <span className="font-medium">₩400,000</span>
+                  <span className="text-gray-700">체육관 대여료(1주)</span>
+                  <span className="font-medium">₩100,000</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-gray-700">장비 및 용품</span>
+                  <span className="text-gray-700">장비 및 용품(예시)</span>
                   <span className="font-medium">₩150,000</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-gray-700">음료수</span>
-                  <span className="font-medium">₩40,000</span>
+                  <span className="text-gray-700">음료수(1주)</span>
+                  <span className="font-medium">₩10,000</span>
                 </div>
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between py-2">
-                  <span className="text-gray-700">토너먼트 참가비</span>
+                  <span className="text-gray-700">전국체전 숙소 예약비</span>
                   <span className="font-medium">₩100,000</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-gray-700">보험료</span>
+                  <span className="text-gray-700">교류전 원정비</span>
                   <span className="font-medium">₩30,000</span>
                 </div>
                 <div className="flex justify-between py-2">
