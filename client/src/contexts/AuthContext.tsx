@@ -88,13 +88,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const signOut = async () => {
-    // First, call Supabase signOut
-    await supabase.auth.signOut();
-    
-    // Immediately update local state for instant UI response
-    setUser(null);
-    setProfile(null);
-    setLoading(false);
+    try {
+      // First, call Supabase signOut with global scope
+      await supabase.auth.signOut({ scope: 'global' });
+      
+      // Immediately update local state for instant UI response
+      setUser(null);
+      setProfile(null);
+      setLoading(false);
+    } catch (error) {
+      console.error('SignOut error:', error);
+      // Even if signOut fails, clear local state
+      setUser(null);
+      setProfile(null);
+      setLoading(false);
+      throw error;
+    }
   };
 
   return (

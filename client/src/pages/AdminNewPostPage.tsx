@@ -24,7 +24,7 @@ interface YouTubeVideo {
 
 export default function AdminNewPostPage() {
   const [location, setLocation] = useLocation();
-  const { user, isAdmin, loading: authLoading } = useAuth();
+  const { user, isAdmin, loading: authLoading, signOut } = useAuth();
   const { toast } = useToast();
   
   const [title, setTitle] = useState('');
@@ -140,6 +140,26 @@ export default function AdminNewPostPage() {
       });
     }
   }, [isAdmin, authLoading]);
+
+  // Handle logout
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      setLocation('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to logout. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  // Handle change ID (navigate to login)
+  const handleChangeId = () => {
+    setLocation('/login');
+  };
 
   // Handle video selection
   const handleVideoSelect = (videoId: string, checked: boolean) => {
@@ -386,8 +406,30 @@ export default function AdminNewPostPage() {
       <div className="max-w-2xl mx-auto">
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl font-bold">Create New Post</CardTitle>
-            <CardDescription>Add a new YouTube video to the site</CardDescription>
+            <div className="flex justify-between items-start">
+              <div>
+                <CardTitle className="text-2xl font-bold">Create New Post</CardTitle>
+                <CardDescription>Add a new YouTube video to the site</CardDescription>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleChangeId}
+                  data-testid="button-change-id"
+                >
+                  Change ID
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  data-testid="button-logout"
+                >
+                  Logout
+                </Button>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
