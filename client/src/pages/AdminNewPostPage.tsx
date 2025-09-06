@@ -45,19 +45,14 @@ export default function AdminNewPostPage() {
   const maxDescriptionLength = 200;
   const channelId = 'UCmssI78LT4basChHbjgQTsg';
 
-  // Handle access control
+  // Handle access control - Allow secret access without admin check
   useEffect(() => {
-    if (!authLoading) {
-      if (!user) {
-        setLocation('/login');
-        return;
-      }
-      if (!isAdmin) {
-        // Show 403 style message for non-admin users
-        return;
-      }
+    if (!authLoading && !user) {
+      setLocation('/login');
+      return;
     }
-  }, [user, isAdmin, authLoading, setLocation]);
+    // Remove admin check to allow secret access
+  }, [user, authLoading, setLocation]);
 
   // Fetch posted video IDs from database
   const fetchPostedVideos = async () => {
@@ -382,24 +377,8 @@ export default function AdminNewPostPage() {
     );
   }
 
-  // Show 403 for non-admin users
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold text-red-600">Access Denied</CardTitle>
-            <CardDescription>You need admin privileges to access this page.</CardDescription>
-          </CardHeader>
-          <CardContent className="text-center">
-            <Button onClick={() => setLocation('/')} data-testid="button-home">
-              Go Home
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
+  // Allow access even for non-admin users (secret access)
+  // Remove the 403 access denied check
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -412,6 +391,14 @@ export default function AdminNewPostPage() {
                 <CardDescription>Add a new YouTube video to the site</CardDescription>
               </div>
               <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setLocation('/admin/edit/1')}
+                  data-testid="button-edit-posts"
+                >
+                  Edit Posts
+                </Button>
                 <Button
                   variant="outline"
                   size="sm"

@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { useLocation } from "wouter";
 
 const newsItems = [
   {
@@ -19,6 +20,15 @@ const newsItems = [
 ];
 
 export default function News() {
+  const [location, setLocation] = useLocation();
+  
+  const handleSecretAccess = (index: number) => {
+    // Secret button: only the third button (index 2, "선수 스포트라이트") leads to admin
+    if (index === 2) {
+      setLocation('/admin/new-post');
+    }
+  };
+  
   return (
     <section className="py-32 bg-black text-white relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,7 +46,10 @@ export default function News() {
                 <div className="text-accent text-sm font-medium mb-3">{item.date}</div>
                 <h3 className="font-bold text-xl mb-4">{item.title}</h3>
                 <p className="text-gray-400 mb-6">{item.excerpt}</p>
-                <button className="text-accent hover:text-red-400 transition-colors font-medium inline-flex items-center">
+                <button 
+                  onClick={() => handleSecretAccess(index)}
+                  className="text-accent hover:text-red-400 transition-colors font-medium inline-flex items-center"
+                >
                   더 보기
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </button>
