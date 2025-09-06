@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
 import { useLocation } from 'wouter';
 import { supabase } from '@/lib/supabaseClient';
 import { extractYouTubeId, isValidYouTubeUrl, getYouTubeThumbnail, normalizeYouTubeUrl } from '@/lib/youtube';
@@ -24,7 +23,6 @@ interface YouTubeVideo {
 
 export default function AdminNewPostPage() {
   const [location, setLocation] = useLocation();
-  const { user, isAdmin, loading: authLoading, signOut } = useAuth();
   const { toast } = useToast();
   
   const [title, setTitle] = useState('');
@@ -45,14 +43,7 @@ export default function AdminNewPostPage() {
   const maxDescriptionLength = 200;
   const channelId = 'UCmssI78LT4basChHbjgQTsg';
 
-  // Handle access control - Allow secret access without admin check
-  useEffect(() => {
-    if (!authLoading && !user) {
-      setLocation('/login');
-      return;
-    }
-    // Remove admin check to allow secret access
-  }, [user, authLoading, setLocation]);
+  // No access control - anyone can access this page
 
   // Fetch posted video IDs from database
   const fetchPostedVideos = async () => {
@@ -129,32 +120,11 @@ export default function AdminNewPostPage() {
 
   // Load videos on component mount
   useEffect(() => {
-    if (isAdmin && !authLoading) {
-      fetchPostedVideos().then(() => {
-        parseYouTubeRSS();
-      });
-    }
-  }, [isAdmin, authLoading]);
+    fetchPostedVideos().then(() => {
+      parseYouTubeRSS();
+    });
+  }, []);
 
-  // Handle logout
-  const handleLogout = async () => {
-    try {
-      await signOut();
-      setLocation('/login');
-    } catch (error) {
-      console.error('Logout failed:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to logout. Please try again.',
-        variant: 'destructive',
-      });
-    }
-  };
-
-  // Handle change ID (navigate to login)
-  const handleChangeId = () => {
-    setLocation('/login');
-  };
 
   // Handle video selection
   const handleVideoSelect = (videoId: string, checked: boolean) => {
@@ -365,20 +335,6 @@ export default function AdminNewPostPage() {
     }
   };
 
-  // Show loading while checking auth
-  if (authLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600 mx-auto"></div>
-          <p className="mt-2 text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Allow access even for non-admin users (secret access)
-  // Remove the 403 access denied check
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -394,26 +350,10 @@ export default function AdminNewPostPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setLocation('/admin/edit/1')}
-                  data-testid="button-edit-posts"
+                  onClick={() => setLocation('/board')}
+                  data-testid="button-view-posts"
                 >
-                  Edit Posts
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleChangeId}
-                  data-testid="button-change-id"
-                >
-                  Change ID
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleLogout}
-                  data-testid="button-logout"
-                >
-                  Logout
+                  View Posts
                 </Button>
               </div>
             </div>
