@@ -181,18 +181,28 @@ export default function AdminNewPostPage() {
         youtube_id: video.id,
       }));
       
-      const { error } = await supabase
+      console.log('Attempting bulk insert:', insertData);
+      
+      const { data, error } = await supabase
         .from('youtube posts')
-        .insert(insertData);
+        .insert(insertData)
+        .select();
       
       if (error) {
+        console.error('Bulk insert error details:', {
+          message: error.message,
+          code: error.code,
+          details: error.details,
+          hint: error.hint
+        });
         toast({
           title: 'Error',
-          description: 'Failed to post some videos. Please try again.',
+          description: `Failed to post videos: ${error.message}`,
           variant: 'destructive',
         });
         console.error('Bulk insert error:', error);
       } else {
+        console.log('Bulk insert successful:', data);
         toast({
           title: 'Success',
           description: `Successfully posted ${selectedVideosList.length} video(s)!`,
@@ -309,23 +319,34 @@ export default function AdminNewPostPage() {
     }
 
     try {
-      const { error } = await supabase
+      const insertData = {
+        title: trimmedTitle,
+        description: trimmedDescription || null,
+        youtube_url: normalizeYouTubeUrl(trimmedUrl),
+        youtube_id: youtubeId,
+      };
+      
+      console.log('Attempting to insert data:', insertData);
+      
+      const { data, error } = await supabase
         .from('youtube posts')
-        .insert({
-          title: trimmedTitle,
-          description: trimmedDescription || null,
-          youtube_url: normalizeYouTubeUrl(trimmedUrl),
-          youtube_id: youtubeId,
-        });
+        .insert(insertData)
+        .select();
 
       if (error) {
+        console.error('Insert error details:', {
+          message: error.message,
+          code: error.code,
+          details: error.details,
+          hint: error.hint
+        });
         toast({
           title: 'Error',
-          description: 'Failed to create post. Please try again.',
+          description: `Failed to create post: ${error.message}`,
           variant: 'destructive',
         });
-        console.error('Insert error:', error);
       } else {
+        console.log('Insert successful:', data);
         toast({
           title: 'Success',
           description: 'Post created successfully!',
