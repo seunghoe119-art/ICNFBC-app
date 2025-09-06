@@ -33,18 +33,21 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [profileLoading, setProfileLoading] = useState(false);
 
+  const loading = authLoading || profileLoading;
   const isAdmin = profile?.role === 'admin' && profile?.status === 'approved';
 
   useEffect(() => {
     // Get initial session
+    setAuthLoading(true);
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       if (session?.user) {
         fetchProfile(session.user.id);
       } else {
-        setLoading(false);
+        setAuthLoading(false);
       }
     });
 
@@ -52,13 +55,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state change:', event, session?.user?.id);
+      
       if (event === 'SIGNED_IN' && session?.user) {
         setUser(session.user);
+        setAuthLoading(false);
         await fetchProfile(session.user.id);
       } else if (event === 'SIGNED_OUT') {
         setUser(null);
         setProfile(null);
-        setLoading(false);
+        setAuthLoading(false);
+        setProfileLoading(false);
+      } else if (event === 'TOKEN_REFRESHED' && session?.user) {
+        setUser(session.user);
+        await fetchProfile(session.user.id);
+      } else if (event === 'INITIAL_SESSION') {
+        setAuthLoading(false);
       }
     });
 
@@ -66,6 +78,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   const fetchProfile = async (userId: string) => {
+    setProfileLoading(true);
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -83,19 +96,45 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       console.error('Error fetching profile:', error);
       setProfile(null);
     } finally {
-      setLoading(false);
+      setProfileLoading(false);
     }
   };
 
   const signOut = async () => {
-    // First, call Supabase signOut
-    await supabase.auth.signOut();
-    
-    // Immediately update local state for instant UI response
-    setUser(null);
-    setProfile(null);
-    setLoading(false);
+    try {
+      // Set loading states
+      setAuthLoading(true);
+      setProfileLoading(false);
+      
+      // Call Supabase signOut
+      await supabase.auth.signOut();
+      
+      // Immediately update local state for instant UI response
+      setUser(null);
+      setProfile(null);
+      setAuthLoading(false);
+      setProfileLoading(false);
+    } catch (error) {
+      console.error('Error signing out:', error);
+      // Even if signOut fails, reset local state
+      setUser(null);
+      setProfile(null);
+      setAuthLoading(false);
+      setProfileLoading(false);
+    }
   };
+
+  // Show loading spinner while auth state is being determined
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600 font-medium">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <AuthContext.Provider
