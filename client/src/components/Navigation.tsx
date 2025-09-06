@@ -59,6 +59,11 @@ export default function Navigation() {
     }
   };
 
+  const handleChangeId = () => {
+    setLocation('/login');
+    closeMobileMenu();
+  };
+
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out ${
       isScrolled ? "bg-white/95 backdrop-blur-md border-b border-gray-100" : "bg-transparent"
@@ -129,15 +134,25 @@ export default function Navigation() {
 
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
-              <Button 
-                variant="outline" 
-                onClick={handleLogout}
-                className="rounded-full flex items-center space-x-2"
-                data-testid="button-logout"
-              >
-                <LogOut className="w-4 h-4" />
-                <span>Logout</span>
-              </Button>
+              <>
+                <Button 
+                  variant="outline" 
+                  onClick={handleChangeId}
+                  className="rounded-full"
+                  data-testid="button-change-id"
+                >
+                  <span>Change ID</span>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={handleLogout}
+                  className="rounded-full flex items-center space-x-2"
+                  data-testid="button-logout"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Logout</span>
+                </Button>
+              </>
             ) : (
               <>
                 <Link href="/login" onClick={() => handleNavigation("/login")}>
@@ -216,17 +231,28 @@ export default function Navigation() {
               )}
               <div className="px-3 py-2 border-t border-gray-100 mt-2">
                 {user ? (
-                  <Button 
-                    variant="outline" 
-                    onClick={() => {
-                      handleLogout();
-                      closeMobileMenu();
-                    }}
-                    className="w-full flex items-center justify-center space-x-2"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    <span>Logout</span>
-                  </Button>
+                  <div className="space-y-2">
+                    <Button 
+                      variant="outline" 
+                      onClick={handleChangeId}
+                      className="w-full"
+                      data-testid="button-change-id-mobile"
+                    >
+                      <span>Change ID</span>
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => {
+                        handleLogout();
+                        closeMobileMenu();
+                      }}
+                      className="w-full flex items-center justify-center space-x-2"
+                      data-testid="button-logout-mobile"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span>Logout</span>
+                    </Button>
+                  </div>
                 ) : (
                   <div className="space-y-2">
                     <Link href="/login" onClick={() => handleNavigation("/login")}>
