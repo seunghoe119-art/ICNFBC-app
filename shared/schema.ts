@@ -29,7 +29,7 @@ export const contactMessages = pgTable("contact_messages", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const youtubePosts = pgTable("youtube posts", {
+export const youtubePosts = pgTable("youtube_posts", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   title: text("title").notNull(),
   description: text("description"),

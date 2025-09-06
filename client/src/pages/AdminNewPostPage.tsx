@@ -56,7 +56,7 @@ export default function AdminNewPostPage() {
   const fetchPostedVideos = async () => {
     try {
       const { data, error } = await supabase
-        .from('youtube posts')
+        .from('youtube_posts')
         .select('youtube_id');
       
       if (error) throw error;
@@ -183,8 +183,14 @@ export default function AdminNewPostPage() {
       
       console.log('Attempting bulk insert:', insertData);
       
+      // Enhanced validation for bulk insert
+      const invalidItems = insertData.filter(item => !item.youtube_id || !item.youtube_url || !item.title);
+      if (invalidItems.length > 0) {
+        throw new Error(`Invalid items found: ${invalidItems.length} items missing required fields`);
+      }
+      
       const { data, error } = await supabase
-        .from('youtube posts')
+        .from('youtube_posts')
         .insert(insertData)
         .select();
       
@@ -267,7 +273,7 @@ export default function AdminNewPostPage() {
       setDuplicateCheck(true);
       try {
         const { data, error } = await supabase
-          .from('youtube posts')
+          .from('youtube_posts')
           .select('youtube_id')
           .eq('youtube_id', videoId)
           .limit(1);
@@ -328,8 +334,13 @@ export default function AdminNewPostPage() {
       
       console.log('Attempting to insert data:', insertData);
       
+      // Enhanced validation
+      if (!insertData.youtube_id || !insertData.youtube_url || !insertData.title) {
+        throw new Error('Missing required fields: youtube_id, youtube_url, or title');
+      }
+      
       const { data, error } = await supabase
-        .from('youtube posts')
+        .from('youtube_posts')
         .insert(insertData)
         .select();
 

@@ -20,7 +20,7 @@ const pageSize = 12;
 // Helper to fetch one page with search, ordering, and fallback
 async function fetchPage(q: string, cursor?: { created_at?: string; id?: number }): Promise<YoutubePost[]> {
   let query = supabase
-    .from('youtube posts')
+    .from('youtube_posts')
     .select('id, title, description, youtube_id, youtube_url, created_at');
 
   if (q.trim()) {
@@ -40,7 +40,7 @@ async function fetchPage(q: string, cursor?: { created_at?: string; id?: number 
   // fallback to id desc if created_at fails
   if (error) {
     let fb = supabase
-      .from('youtube posts')
+      .from('youtube_posts')
       .select('id, title, description, youtube_id, youtube_url, created_at');
     if (q.trim()) {
       fb = fb.or(`title.ilike.%${q.trim()}%,description.ilike.%${q.trim()}%`);

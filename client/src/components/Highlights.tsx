@@ -17,7 +17,7 @@ export default function Highlights() {
     queryKey: ['/api/youtube-posts'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('youtube posts')
+        .from('youtube_posts')
         .select('id, title, description, youtube_id, youtube_url, created_at')
         .order('created_at', { ascending: false, nullsFirst: false })
         .limit(4);
@@ -25,7 +25,7 @@ export default function Highlights() {
       if (error) {
         // Fallback to ordering by id if created_at fails
         const { data: fallbackData, error: fallbackError } = await supabase
-          .from('youtube posts')
+          .from('youtube_posts')
           .select('id, title, description, youtube_id, youtube_url, created_at')
           .order('id', { ascending: false })
           .limit(4);
