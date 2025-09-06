@@ -362,7 +362,18 @@ export default function AdminNewPostPage() {
           title: 'Success',
           description: 'Post created successfully!',
         });
-        setLocation('/');
+        
+        // Reset form fields for next post
+        setTitle('');
+        setYoutubeUrl('');
+        setYoutubeId('');
+        setDescription('');
+        setErrors({});
+        
+        // Refresh the video list to show updated posted status
+        fetchPostedVideos().then(() => {
+          parseYouTubeRSS();
+        });
       }
     } catch (error) {
       toast({
