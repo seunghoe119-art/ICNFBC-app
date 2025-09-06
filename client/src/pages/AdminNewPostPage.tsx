@@ -40,6 +40,7 @@ export default function AdminNewPostPage() {
   const [loadingVideos, setLoadingVideos] = useState(false);
   const [postedVideoIds, setPostedVideoIds] = useState<Set<string>>(new Set());
   const [bulkPosting, setBulkPosting] = useState(false);
+  const [reverseOrder, setReverseOrder] = useState(false);
   
   const videosPerPage = 5;
   const totalPages = Math.ceil(allVideos.length / videosPerPage);
@@ -173,8 +174,11 @@ export default function AdminNewPostPage() {
     setBulkPosting(true);
     const selectedVideosList = allVideos.filter(v => selectedVideos.has(v.id) && !v.isPosted);
     
+    // Reverse the order if reverse checkbox is checked
+    const orderedVideosList = reverseOrder ? [...selectedVideosList].reverse() : selectedVideosList;
+    
     try {
-      const insertData = selectedVideosList.map(video => ({
+      const insertData = orderedVideosList.map(video => ({
         title: video.title,
         description: null,
         youtube_url: video.url,
@@ -211,12 +215,12 @@ export default function AdminNewPostPage() {
         console.log('Bulk insert successful:', data);
         toast({
           title: 'Success',
-          description: `Successfully posted ${selectedVideosList.length} video(s)!`,
+          description: `Successfully posted ${orderedVideosList.length} video(s)${reverseOrder ? ' in reverse order' : ''}!`,
         });
         
         // Mark videos as posted
         const newPostedIds = new Set(postedVideoIds);
-        selectedVideosList.forEach(video => newPostedIds.add(video.id));
+        orderedVideosList.forEach(video => newPostedIds.add(video.id));
         setPostedVideoIds(newPostedIds);
         
         // Update all videos list
@@ -585,7 +589,19 @@ export default function AdminNewPostPage() {
                 </div>
                 
                 {selectedVideos.size > 0 && (
-                  <div className="border-t pt-4">
+                  <div className="border-t pt-4 space-y-4">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="reverse-order"
+                        checked={reverseOrder}
+                        onCheckedChange={(checked) => setReverseOrder(checked as boolean)}
+                        disabled={bulkPosting}
+                        data-testid="checkbox-reverse-order"
+                      />
+                      <Label htmlFor="reverse-order" className="text-sm">
+                        Post in reverse order (oldest first)
+                      </Label>
+                    </div>
                     <Button
                       onClick={handleBulkPost}
                       disabled={bulkPosting || selectedVideos.size === 0}
@@ -594,7 +610,7 @@ export default function AdminNewPostPage() {
                     >
                       {bulkPosting 
                         ? 'Posting...' 
-                        : `Post Selected (${selectedVideos.size})`
+                        : `Post Selected (${selectedVideos.size})${reverseOrder ? ' - Reverse Order' : ''}`
                       }
                     </Button>
                   </div>
