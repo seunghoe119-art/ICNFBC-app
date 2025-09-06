@@ -122,9 +122,9 @@ export default function Navigation() {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/contact" onClick={() => handleNavigation("/contact")}>
+            <Link href="/board" onClick={() => handleNavigation("/board")}>
               <Button className="bg-black text-white hover:bg-gray-800 rounded-full">
-                Get Started
+                GO VIDEO
               </Button>
             </Link>
           </div>
@@ -180,9 +180,9 @@ export default function Navigation() {
                 </span>
               </Link>
               <div className="px-3 py-2 border-t border-gray-100 mt-2">
-                <Link href="/contact" onClick={() => handleNavigation("/contact")}>
+                <Link href="/board" onClick={() => handleNavigation("/board")}>
                   <Button className="w-full bg-black text-white hover:bg-gray-800">
-                    Get Started
+                    GO VIDEO
                   </Button>
                 </Link>
               </div>
