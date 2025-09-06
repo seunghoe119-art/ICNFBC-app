@@ -17,13 +17,20 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [signUpSuccess, setSignUpSuccess] = useState(false);
+  const [allowLogin, setAllowLogin] = useState(false);
 
-  // Redirect if already logged in
+  // Check URL parameters to see if this is a forced login (from Change ID)
   useEffect(() => {
-    if (user) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const forceLogin = urlParams.get('force') === 'true';
+    
+    if (forceLogin) {
+      setAllowLogin(true);
+    } else if (user && !allowLogin) {
+      // Only redirect if user is logged in and this isn't a forced login
       setLocation('/admin/new-post');
     }
-  }, [user, setLocation]);
+  }, [user, setLocation, allowLogin]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,6 +65,8 @@ export default function LoginPage() {
         if (error) {
           setError(error.message);
         } else {
+          // Clear the force parameter and redirect
+          window.history.replaceState({}, '', '/login');
           setLocation('/admin/new-post');
         }
       }

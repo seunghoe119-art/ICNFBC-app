@@ -60,7 +60,7 @@ export default function Navigation() {
   };
 
   const handleChangeId = () => {
-    setLocation('/login');
+    setLocation('/login?force=true');
     closeMobileMenu();
   };
 
