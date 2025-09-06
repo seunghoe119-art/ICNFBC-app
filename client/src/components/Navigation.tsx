@@ -123,7 +123,7 @@ export default function Navigation() {
 
           <div className="hidden md:flex items-center space-x-4">
             <Link href="/board" onClick={() => handleNavigation("/board")}>
-              <Button className="bg-black text-white hover:bg-gray-800 rounded-full">
+              <Button className="bg-accent text-white hover:bg-accent/90 rounded-full">
                 GO VIDEO
               </Button>
             </Link>
