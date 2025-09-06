@@ -112,26 +112,6 @@ export default function Highlights() {
           </div>
         )}
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {isLoading ? (
-            // Loading state - show 4 skeleton cards
-            Array.from({ length: 4 }).map((_, index) => (
-              <div key={`skeleton-${index}`}>
-                {renderSkeletonCard()}
-              </div>
-            ))
-          ) : posts && posts.length > 0 ? (
-            // Show actual data
-            posts.map(renderVideoCard)
-          ) : (
-            // Empty state - show 4 placeholder cards
-            Array.from({ length: 4 }).map((_, index) => (
-              <div key={`empty-${index}`}>
-                {renderEmptyCard()}
-              </div>
-            ))
-          )}
-        </div>
 
         <div className="text-center mt-12">
           <Link 
