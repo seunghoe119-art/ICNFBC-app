@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertMembershipApplicationSchema, insertContactMessageSchema } from "@shared/schema";
+import { insertMembershipApplicationSchema, insertContactMessageSchema, insertYoutubePostSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Membership application endpoint
@@ -41,6 +41,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const messages = await storage.getContactMessages();
       res.json(messages);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // YouTube posts endpoints
+  app.post("/api/youtube-posts", async (req, res) => {
+    try {
+      const validatedData = insertYoutubePostSchema.parse(req.body);
+      const post = await storage.createYoutubePost(validatedData);
+      res.json({ success: true, post });
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/youtube-posts", async (req, res) => {
+    try {
+      const posts = await storage.getYoutubePosts();
+      res.json(posts);
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }

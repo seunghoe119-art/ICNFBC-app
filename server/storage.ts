@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type MembershipApplication, type InsertMembershipApplication, type ContactMessage, type InsertContactMessage } from "@shared/schema";
+import { type User, type InsertUser, type MembershipApplication, type InsertMembershipApplication, type ContactMessage, type InsertContactMessage, type YoutubePost, type InsertYoutubePost } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -9,17 +9,21 @@ export interface IStorage {
   getMembershipApplications(): Promise<MembershipApplication[]>;
   createContactMessage(message: InsertContactMessage): Promise<ContactMessage>;
   getContactMessages(): Promise<ContactMessage[]>;
+  createYoutubePost(post: InsertYoutubePost): Promise<YoutubePost>;
+  getYoutubePosts(): Promise<YoutubePost[]>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
   private membershipApplications: Map<string, MembershipApplication>;
   private contactMessages: Map<string, ContactMessage>;
+  private youtubePosts: Map<number, YoutubePost>;
 
   constructor() {
     this.users = new Map();
     this.membershipApplications = new Map();
     this.contactMessages = new Map();
+    this.youtubePosts = new Map();
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -69,6 +73,22 @@ export class MemStorage implements IStorage {
 
   async getContactMessages(): Promise<ContactMessage[]> {
     return Array.from(this.contactMessages.values());
+  }
+
+  async createYoutubePost(insertPost: InsertYoutubePost): Promise<YoutubePost> {
+    const id = Math.max(0, ...Array.from(this.youtubePosts.keys())) + 1;
+    const post: YoutubePost = {
+      id,
+      ...insertPost,
+      description: insertPost.description || null,
+      created_at: new Date(),
+    };
+    this.youtubePosts.set(id, post);
+    return post;
+  }
+
+  async getYoutubePosts(): Promise<YoutubePost[]> {
+    return Array.from(this.youtubePosts.values());
   }
 }
 
