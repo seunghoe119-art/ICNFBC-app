@@ -34,11 +34,18 @@ export default function AdminNewPostPage() {
   const [duplicateCheck, setDuplicateCheck] = useState(false);
   
   // YouTube RSS feed state
-  const [latestVideos, setLatestVideos] = useState<YouTubeVideo[]>([]);
+  const [allVideos, setAllVideos] = useState<YouTubeVideo[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedVideos, setSelectedVideos] = useState<Set<string>>(new Set());
   const [loadingVideos, setLoadingVideos] = useState(false);
   const [postedVideoIds, setPostedVideoIds] = useState<Set<string>>(new Set());
   const [bulkPosting, setBulkPosting] = useState(false);
+  
+  const videosPerPage = 5;
+  const totalPages = Math.ceil(allVideos.length / videosPerPage);
+  const startIndex = (currentPage - 1) * videosPerPage;
+  const endIndex = startIndex + videosPerPage;
+  const currentVideos = allVideos.slice(startIndex, endIndex);
   
   const maxDescriptionLength = 200;
   const channelId = 'UCmssI78LT4basChHbjgQTsg';
@@ -83,7 +90,8 @@ export default function AdminNewPostPage() {
       
       const videos: YouTubeVideo[] = [];
       
-      for (let i = 0; i < Math.min(entries.length, 6); i++) {
+      // Get all videos (not just 6)
+      for (let i = 0; i < entries.length; i++) {
         const entry = entries[i];
         const videoId = entry.querySelector('yt\\:videoId, videoId')?.textContent;
         const title = entry.querySelector('title')?.textContent;
@@ -105,7 +113,8 @@ export default function AdminNewPostPage() {
         }
       }
       
-      setLatestVideos(videos);
+      setAllVideos(videos);
+      setCurrentPage(1); // Reset to first page when loading new videos
     } catch (error) {
       console.error('Error parsing RSS feed:', error);
       toast({
@@ -135,7 +144,7 @@ export default function AdminNewPostPage() {
       
       // Auto-fill form with first selected video
       if (newSelected.size === 1) {
-        const video = latestVideos.find(v => v.id === videoId);
+        const video = allVideos.find(v => v.id === videoId);
         if (video) {
           setTitle(video.title);
           setYoutubeUrl(video.url);
@@ -162,7 +171,7 @@ export default function AdminNewPostPage() {
     if (selectedVideos.size === 0) return;
     
     setBulkPosting(true);
-    const selectedVideosList = latestVideos.filter(v => selectedVideos.has(v.id) && !v.isPosted);
+    const selectedVideosList = allVideos.filter(v => selectedVideos.has(v.id) && !v.isPosted);
     
     try {
       const insertData = selectedVideosList.map(video => ({
@@ -194,8 +203,8 @@ export default function AdminNewPostPage() {
         selectedVideosList.forEach(video => newPostedIds.add(video.id));
         setPostedVideoIds(newPostedIds);
         
-        // Update latest videos list
-        setLatestVideos(prev => prev.map(video => ({
+        // Update all videos list
+        setAllVideos(prev => prev.map(video => ({
           ...video,
           isPosted: newPostedIds.has(video.id)
         })));
@@ -487,7 +496,7 @@ export default function AdminNewPostPage() {
             ) : (
               <>
                 <div className="grid gap-4 mb-6">
-                  {latestVideos.map((video) => (
+                  {currentVideos.map((video) => (
                     <div
                       key={video.id}
                       className={`flex items-center space-x-4 p-4 border rounded-lg ${
@@ -548,7 +557,45 @@ export default function AdminNewPostPage() {
                   </div>
                 )}
                 
-                {latestVideos.length === 0 && !loadingVideos && (
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className="flex justify-center items-center space-x-2 mt-6 pt-4 border-t">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1}
+                      data-testid="button-prev-page"
+                    >
+                      ←
+                    </Button>
+                    
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNum => (
+                      <Button
+                        key={pageNum}
+                        variant={currentPage === pageNum ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setCurrentPage(pageNum)}
+                        className="min-w-[40px]"
+                        data-testid={`button-page-${pageNum}`}
+                      >
+                        {pageNum}
+                      </Button>
+                    ))}
+                    
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                      disabled={currentPage === totalPages}
+                      data-testid="button-next-page"
+                    >
+                      →
+                    </Button>
+                  </div>
+                )}
+                
+                {allVideos.length === 0 && !loadingVideos && (
                   <div className="text-center py-8 text-gray-500">
                     <p>No recent videos found.</p>
                     <Button
