@@ -1,16 +1,13 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
-import type { InsertMembershipApplication } from "@shared/schema";
+import { Copy, Send } from "lucide-react";
 
 export default function JoinUs() {
   const { toast } = useToast();
-  const queryClient = useQueryClient();
   
   const [formData, setFormData] = useState({
     name: "",
@@ -22,53 +19,86 @@ export default function JoinUs() {
     dataConsent: false,
   });
 
-  const applicationMutation = useMutation({
-    mutationFn: async (data: InsertMembershipApplication) => {
-      const response = await apiRequest("POST", "/api/membership-applications", data);
-      return response.json();
-    },
-    onSuccess: () => {
+  // Helper functions for text generation and copying
+  const getPositionText = (position: string) => {
+    const positionMap: { [key: string]: string } = {
+      guard: "포인트 가드",
+      shooting: "슈팅 가드",
+      forward: "스몰 포워드",
+      power: "파워 포워드",
+      center: "센터"
+    };
+    return positionMap[position] || position;
+  };
+
+  const getSizeText = (size: string) => {
+    const sizeMap: { [key: string]: string } = {
+      s: "소형 (S)",
+      m: "중형 (M)",
+      l: "대형 (L)",
+      xl: "특대 (XL)",
+      xxl: "특특대 (XXL)"
+    };
+    return sizeMap[size] || size;
+  };
+
+  const getMembershipText = (type: string) => {
+    const membershipMap: { [key: string]: string } = {
+      regular: "정규 회원",
+      dormant: "휴면 회원",
+      firefighter: "학교 재학생 혹은 합격자"
+    };
+    return membershipMap[type] || type;
+  };
+
+  const generateMessage = () => {
+    if (!formData.name || !formData.contact || !formData.position || !formData.jerseySize || !formData.membershipType) {
+      return "모든 필드를 입력해주세요.";
+    }
+    
+    return `안녕하세요 이름 ${formData.name}, 연락처 ${formData.contact}, 포지션 ${getPositionText(formData.position)}, 유니폼사이즈 ${getSizeText(formData.jerseySize)}, ${getMembershipText(formData.membershipType)}으로 인천소방농구에 가입 문의입니다.`;
+  };
+
+  const copyToClipboard = async () => {
+    const message = generateMessage();
+    try {
+      await navigator.clipboard.writeText(message);
       toast({
-        title: "Application Submitted!",
-        description: "We will contact you soon about your membership.",
+        title: "복사 완료!",
+        description: "메시지가 클립보드에 복사되었습니다.",
       });
-      setFormData({
-        name: "",
-        contact: "",
-        position: "",
-        jerseySize: "",
-        membershipType: "",
-        agreeRules: false,
-        dataConsent: false,
-      });
-      queryClient.invalidateQueries({ queryKey: ["/api/membership-applications"] });
-    },
-    onError: (error: any) => {
+    } catch (err) {
       toast({
-        title: "Application Failed",
-        description: error.message || "Please check your information and try again.",
+        title: "복사 실패",
+        description: "클립보드 복사 중 오류가 발생했습니다.",
         variant: "destructive",
       });
-    },
-  });
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.agreeRules || !formData.dataConsent) {
       toast({
-        title: "Please accept all agreements",
-        description: "You must agree to the rules and data consent to proceed.",
+        title: "동의사항 확인",
+        description: "모든 동의사항에 체크해주세요.",
         variant: "destructive",
       });
       return;
     }
 
-    applicationMutation.mutate({
-      ...formData,
-      agreeRules: formData.agreeRules ? "true" : "false",
-      dataConsent: formData.dataConsent ? "true" : "false",
-    });
+    if (!formData.name || !formData.contact || !formData.position || !formData.jerseySize || !formData.membershipType) {
+      toast({
+        title: "입력사항 확인",
+        description: "모든 필드를 입력해주세요.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Redirect to KakaoTalk open chat
+    window.open("https://open.kakao.com/o/s5gBNvNh", "_blank");
   };
 
   return (
@@ -122,6 +152,7 @@ export default function JoinUs() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
+                    data-testid="input-name"
                   />
                 </div>
                 <div>
@@ -133,6 +164,7 @@ export default function JoinUs() {
                     value={formData.contact}
                     onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
                     required
+                    data-testid="input-contact"
                   />
                 </div>
               </div>
@@ -145,6 +177,7 @@ export default function JoinUs() {
                     value={formData.position}
                     onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                     required
+                    data-testid="select-position"
                   >
                     <option value="">포지션 선택</option>
                     <option value="guard">포인트 가드</option>
@@ -161,6 +194,7 @@ export default function JoinUs() {
                     value={formData.jerseySize}
                     onChange={(e) => setFormData({ ...formData, jerseySize: e.target.value })}
                     required
+                    data-testid="select-jersey-size"
                   >
                     <option value="">사이즈 선택</option>
                     <option value="s">소형 (S)</option>
@@ -183,6 +217,7 @@ export default function JoinUs() {
                       className="text-accent focus:ring-accent"
                       onChange={(e) => setFormData({ ...formData, membershipType: e.target.value })}
                       required
+                      data-testid="radio-membership-regular"
                     />
                     <span className="ml-3">정규 회원 (₩19,000/월)</span>
                   </label>
@@ -194,6 +229,7 @@ export default function JoinUs() {
                       className="text-accent focus:ring-accent"
                       onChange={(e) => setFormData({ ...formData, membershipType: e.target.value })}
                       required
+                      data-testid="radio-membership-dormant"
                     />
                     <span className="ml-3">휴면 회원 (₩5,000/월)</span>
                   </label>
@@ -205,6 +241,7 @@ export default function JoinUs() {
                       className="text-accent focus:ring-accent"
                       onChange={(e) => setFormData({ ...formData, membershipType: e.target.value })}
                       required
+                      data-testid="radio-membership-firefighter"
                     />
                     <span className="ml-3">학교 재학생 혹은 합격자 (무료)</span>
                   </label>
@@ -218,6 +255,7 @@ export default function JoinUs() {
                     checked={formData.agreeRules}
                     onCheckedChange={(checked) => setFormData({ ...formData, agreeRules: !!checked })}
                     className="border-gray-700"
+                    data-testid="checkbox-rules"
                   />
                   <Label htmlFor="rules" className="text-white">클럽 규칙에 동의</Label>
                 </div>
@@ -227,18 +265,41 @@ export default function JoinUs() {
                     checked={formData.dataConsent}
                     onCheckedChange={(checked) => setFormData({ ...formData, dataConsent: !!checked })}
                     className="border-gray-700"
+                    data-testid="checkbox-consent"
                   />
                   <Label htmlFor="consent" className="text-white">개인정보 수집 동의</Label>
                 </div>
               </div>
 
-              <Button 
-                type="submit" 
-                className="w-full bg-accent text-white hover:bg-red-600 py-4 rounded-lg font-bold text-lg"
-                disabled={applicationMutation.isPending}
-              >
-                {applicationMutation.isPending ? "제출 중..." : "신청서 제출"}
-              </Button>
+              {/* Generated message preview */}
+              <div className="bg-black border border-gray-700 rounded-lg p-4">
+                <Label className="text-white mb-2 block">생성된 메시지</Label>
+                <p className="text-gray-300 text-sm leading-relaxed" data-testid="text-generated-message">
+                  {generateMessage()}
+                </p>
+              </div>
+
+              {/* Copy and Submit buttons */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <Button 
+                  type="button"
+                  onClick={copyToClipboard}
+                  className="bg-gray-700 text-white hover:bg-gray-600 py-4 rounded-lg font-bold text-lg"
+                  data-testid="button-copy"
+                >
+                  <Copy className="w-5 h-5 mr-2" />
+                  복사
+                </Button>
+                
+                <Button 
+                  type="submit" 
+                  className="bg-accent text-white hover:bg-red-600 py-4 rounded-lg font-bold text-lg"
+                  data-testid="button-submit"
+                >
+                  <Send className="w-5 h-5 mr-2" />
+                  신청서 제출
+                </Button>
+              </div>
             </form>
           </div>
         </div>
