@@ -79,7 +79,7 @@ export default function Navigation() {
                   backgroundClip: 'text'
                 }}>FIRE</span>
               )}
-              <span className="text-white">, F.B.C Team</span>
+              <span className="text-black">, F.B.C Team</span>
             </span>
           </div>
           
