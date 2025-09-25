@@ -74,7 +74,10 @@ export default function Finance() {
           </div>
 
           <div className="mt-8 text-center">
-            <Button className="bg-accent text-white hover:bg-red-600 rounded-full px-8 py-3">
+            <Button 
+              className="bg-accent text-white hover:bg-red-600 rounded-full px-8 py-3"
+              onClick={() => window.open('https://1drv.ms/f/c/ed6e5a8c5875b6b8/EpcD9lhH4WRFi6bhX2fHXBIBK-5vE45vulM33mRSbWcaTA', '_blank')}
+            >
               월간 보고서 보기
             </Button>
           </div>
