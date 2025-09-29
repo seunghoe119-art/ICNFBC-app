@@ -39,19 +39,13 @@ jobs:
         VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         NODE_ENV: production
         
-    - name: Fix all asset paths for GitHub Pages
+    - name: Fix asset paths for GitHub Pages
       run: |
-        # Fix ALL absolute paths in generated files (comprehensive)
+        # wouter Router now handles base path, only fix remaining asset references
         find ./dist/public -name "*.html" -exec sed -i 's|="/assets/|="/ICNFBC-app/assets/|g' {} +
-        find ./dist/public -name "*.html" -exec sed -i 's|href="/"|href="/ICNFBC-app/"|g' {} +
-        find ./dist/public -name "*.html" -exec sed -i 's|src="/"|src="/ICNFBC-app/"|g' {} +
         find ./dist/public -name "*.js" -exec sed -i 's|"/assets/|"/ICNFBC-app/assets/|g' {} +
-        find ./dist/public -name "*.js" -exec sed -i 's|src="/\([^"]*\)"|src="/ICNFBC-app/\1"|g' {} +
         find ./dist/public -name "*.css" -exec sed -i 's|url(/assets/|url(/ICNFBC-app/assets/|g' {} +
-        find ./dist/public -name "*.css" -exec sed -i 's|"/assets/|"/ICNFBC-app/assets/|g' {} +
-        find ./dist/public -name "*.css" -exec sed -i 's|url(/\([^)]*\))|url(/ICNFBC-app/\1)|g' {} +
-        # Note: Images now use Google Drive URLs, no local path fixing needed
-        echo "✅ All asset paths updated for GitHub Pages"
+        echo "✅ Asset paths updated for GitHub Pages"
         
     - name: Setup Pages
       uses: actions/configure-pages@v4
