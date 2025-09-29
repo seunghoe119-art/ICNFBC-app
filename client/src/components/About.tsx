@@ -14,7 +14,7 @@ export default function About() {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <img 
-              src="/basketball.jpg" 
+              src="https://drive.google.com/uc?export=view&id=1KFNgHWumBbkp4vadsjAiQzLRNzUhAUcb" 
               alt="Basketball team1" 
               className="rounded-2xl shadow-2xl"
             />

@@ -50,12 +50,7 @@ jobs:
         find ./dist/public -name "*.css" -exec sed -i 's|url(/assets/|url(/ICNFBC-app/assets/|g' {} +
         find ./dist/public -name "*.css" -exec sed -i 's|"/assets/|"/ICNFBC-app/assets/|g' {} +
         find ./dist/public -name "*.css" -exec sed -i 's|url(/\([^)]*\))|url(/ICNFBC-app/\1)|g' {} +
-        # Fix image paths specifically
-        find ./dist/public -name "*.js" -exec sed -i 's|"/123.png"|"/ICNFBC-app/123.png"|g' {} +
-        find ./dist/public -name "*.js" -exec sed -i 's|"/basketball.jpg"|"/ICNFBC-app/basketball.jpg"|g' {} +
-        find ./dist/public -name "*.js" -exec sed -i 's|"/group image.jpg"|"/ICNFBC-app/group image.jpg"|g' {} +
-        find ./dist/public -name "*.js" -exec sed -i 's|"/court1.jpg"|"/ICNFBC-app/court1.jpg"|g' {} +
-        find ./dist/public -name "*.js" -exec sed -i 's|"/court2.jpg"|"/ICNFBC-app/court2.jpg"|g' {} +
+        # Note: Images now use Google Drive URLs, no local path fixing needed
         echo "✅ All asset paths updated for GitHub Pages"
         
     - name: Setup Pages
