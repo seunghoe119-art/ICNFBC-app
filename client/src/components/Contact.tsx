@@ -36,7 +36,7 @@ export default function Contact() {
           </p>
           <div className="mt-8">
             <img 
-              src="https://drive.google.com/uc?export=view&id=1Cv1hzgi7a_wbjNUERaaXNSWNAjrvlkqO" 
+              src="/123.jpeg" 
               alt="Contact information" 
               className="mx-auto rounded-lg shadow-lg max-w-md w-full"
             />

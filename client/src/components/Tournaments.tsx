@@ -12,7 +12,7 @@ export default function Tournaments() {
         <div className="grid md:grid-cols-2 gap-12">
           <div className="relative">
             <img 
-              src="https://drive.google.com/uc?export=view&id=1XxFvaBgcOvuJyVx_zbMwYwPYaAqwoUqI" 
+              src="/group image.jpeg" 
               alt="Team celebration after tournament victory" 
               className="rounded-2xl shadow-xl w-full"
             />

@@ -34,14 +34,14 @@ export default function Schedule() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
               <div className="relative overflow-hidden rounded-xl shadow-2xl">
                 <img 
-                  src="https://drive.google.com/uc?export=view&id=1FUMaSSzd9WzgSd08RgNwu-BJ0owHQKUV" 
+                  src="/gym1.jpeg" 
                   alt="Basketball Court 1" 
                   className="w-full h-48 sm:h-64 object-cover transition-transform duration-500 hover:scale-105"
                 />
               </div>
               <div className="relative overflow-hidden rounded-xl shadow-2xl">
                 <img 
-                  src="https://drive.google.com/uc?export=view&id=1pJw2-BY6Hj3ybCRpz-Xqrz98kyQkW64M" 
+                  src="/gym2.jpeg" 
                   alt="Basketball Court 2" 
                   className="w-full h-48 sm:h-64 object-cover transition-transform duration-500 hover:scale-105"
                 />
