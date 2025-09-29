@@ -39,9 +39,19 @@ jobs:
         VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         NODE_ENV: production
         
+    - name: Fix GitHub Pages paths
+      run: |
+        # Fix asset paths in index.html for GitHub Pages
+        sed -i 's|/assets/|/ICNFBC-app/assets/|g' ./dist/public/index.html
+        sed -i 's|href="/"|href="/ICNFBC-app/"|g' ./dist/public/index.html
+        sed -i 's|src="/"|src="/ICNFBC-app/"|g' ./dist/public/index.html
+        
     - name: Setup Pages
       uses: actions/configure-pages@v4
       
+    - name: Create 404.html for SPA routing
+      run: cp ./dist/public/index.html ./dist/public/404.html
+        
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
