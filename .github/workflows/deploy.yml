@@ -41,13 +41,21 @@ jobs:
         
     - name: Fix all asset paths for GitHub Pages
       run: |
-        # Fix asset paths in all generated files (comprehensive)
+        # Fix ALL absolute paths in generated files (comprehensive)
         find ./dist/public -name "*.html" -exec sed -i 's|="/assets/|="/ICNFBC-app/assets/|g' {} +
         find ./dist/public -name "*.html" -exec sed -i 's|href="/"|href="/ICNFBC-app/"|g' {} +
         find ./dist/public -name "*.html" -exec sed -i 's|src="/"|src="/ICNFBC-app/"|g' {} +
         find ./dist/public -name "*.js" -exec sed -i 's|"/assets/|"/ICNFBC-app/assets/|g' {} +
+        find ./dist/public -name "*.js" -exec sed -i 's|src="/\([^"]*\)"|src="/ICNFBC-app/\1"|g' {} +
         find ./dist/public -name "*.css" -exec sed -i 's|url(/assets/|url(/ICNFBC-app/assets/|g' {} +
         find ./dist/public -name "*.css" -exec sed -i 's|"/assets/|"/ICNFBC-app/assets/|g' {} +
+        find ./dist/public -name "*.css" -exec sed -i 's|url(/\([^)]*\))|url(/ICNFBC-app/\1)|g' {} +
+        # Fix image paths specifically
+        find ./dist/public -name "*.js" -exec sed -i 's|"/123.png"|"/ICNFBC-app/123.png"|g' {} +
+        find ./dist/public -name "*.js" -exec sed -i 's|"/basketball.jpg"|"/ICNFBC-app/basketball.jpg"|g' {} +
+        find ./dist/public -name "*.js" -exec sed -i 's|"/group image.jpg"|"/ICNFBC-app/group image.jpg"|g' {} +
+        find ./dist/public -name "*.js" -exec sed -i 's|"/court1.jpg"|"/ICNFBC-app/court1.jpg"|g' {} +
+        find ./dist/public -name "*.js" -exec sed -i 's|"/court2.jpg"|"/ICNFBC-app/court2.jpg"|g' {} +
         echo "✅ All asset paths updated for GitHub Pages"
         
     - name: Setup Pages
