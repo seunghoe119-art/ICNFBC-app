@@ -32,15 +32,23 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Build for production with GitHub Pages base path
-      run: |
-        # Build frontend only with correct base path
-        cd client
-        npx vite build --base=/ICNFBC-app/ --outDir=../dist/public --emptyOutDir
+    - name: Build for production
+      run: npm run build
       env:
         VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
         VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         NODE_ENV: production
+        
+    - name: Fix all asset paths for GitHub Pages
+      run: |
+        # Fix asset paths in all generated files (comprehensive)
+        find ./dist/public -name "*.html" -exec sed -i 's|="/assets/|="/ICNFBC-app/assets/|g' {} +
+        find ./dist/public -name "*.html" -exec sed -i 's|href="/"|href="/ICNFBC-app/"|g' {} +
+        find ./dist/public -name "*.html" -exec sed -i 's|src="/"|src="/ICNFBC-app/"|g' {} +
+        find ./dist/public -name "*.js" -exec sed -i 's|"/assets/|"/ICNFBC-app/assets/|g' {} +
+        find ./dist/public -name "*.css" -exec sed -i 's|url(/assets/|url(/ICNFBC-app/assets/|g' {} +
+        find ./dist/public -name "*.css" -exec sed -i 's|"/assets/|"/ICNFBC-app/assets/|g' {} +
+        echo "✅ All asset paths updated for GitHub Pages"
         
     - name: Setup Pages
       uses: actions/configure-pages@v4
